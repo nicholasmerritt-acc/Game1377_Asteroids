@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        RespawnPlayer(initialSpawnLocation);
+        RespawnPlayer();
     }
 
     public void OnPlayerDeath(Vector3 currentLocation)
@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
         if (Lives > 0)
         {
             Lives--;
-            RespawnPlayer(asteroidSpawner.GetRandomSafeLocation(currentLocation));
+            RespawnPlayer(true);
         }
     }
 
@@ -28,13 +28,21 @@ public class GameManager : MonoBehaviour
     /// for now, spawn in a safe spot. TODO invincible
     /// </summary>
     /// <param name="spawnLocation"></param>
-    private void RespawnPlayer(Vector3 spawnLocation)
+    private void RespawnPlayer(bool invincibleOnSpawn = false)
     {
-        GameObject player = Instantiate(PlayerPrefab, spawnLocation, PlayerPrefab.transform.rotation);
+        GameObject player = Instantiate(PlayerPrefab, initialSpawnLocation, PlayerPrefab.transform.rotation);
         if (player.TryGetComponent<AsteroidsPlayerController>(out var controller))
         {
             controller.SetGameManager(this);
             controller.SetAsteroidSpawner(asteroidSpawner);
+            if (invincibleOnSpawn)
+            {
+                controller.BecomeInvincible();
+            }
+        }
+        else
+        {
+            Debug.LogError("Player prefab is missing Player Controller component!");
         }
     }
 }

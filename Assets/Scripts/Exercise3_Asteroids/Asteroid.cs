@@ -81,8 +81,18 @@ public class Asteroid : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player")) {
-            Destroy(collision.gameObject);
-            gameManager.OnPlayerDeath(transform.position);
+            if (collision.gameObject.TryGetComponent<AsteroidsPlayerController>(out AsteroidsPlayerController controller))
+            {
+                if (!controller.IsInvincible())
+                {
+                    Destroy(collision.gameObject);
+                    gameManager.OnPlayerDeath(transform.position);
+                }
+            } 
+            else
+            {
+                Debug.LogError("GameObject with Player tag does not have correct Player Controller component!");
+            }
         }
         else if (collision.gameObject.CompareTag("Bullet"))
         {

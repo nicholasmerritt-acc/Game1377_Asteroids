@@ -88,6 +88,9 @@ public class AsteroidSpawner : MonoBehaviour
         {
             spawnedAsteroid.SetAsteroidSpawner(this);
             spawnedAsteroid.SetGameManager(gameManager);
+        } else
+        {
+            Debug.LogError("Asteroid prefabs not set up correctly!");
         }
     }
 }

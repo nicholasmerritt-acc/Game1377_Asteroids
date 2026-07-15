@@ -37,8 +37,8 @@ public class AsteroidsPlayerController : MonoBehaviour
     [Header("Properties")]
     [SerializeField] private float rotationSpeed = 360f;
     [SerializeField] private float thrustForce = 10f;
-    public float InvincibleTimeout = 4f;
-    public bool Invincible = false;
+    [SerializeField] private float invincibleTimeout = 4f;
+    [SerializeField] private bool invincible = false;
 
     private float rotationInput;
     private float thrustInput;
@@ -131,5 +131,27 @@ public class AsteroidsPlayerController : MonoBehaviour
     public void SetAsteroidSpawner(AsteroidSpawner newSpawner)
     {
         asteroidSpawner = newSpawner;
+    }
+
+    /// <summary>
+    /// make the player invincible, for a short duration
+    /// </summary>
+    public void BecomeInvincible()
+    {
+        invincible = true;
+        Invoke(nameof(BecomeNotInvincible), invincibleTimeout);
+    }
+
+    public bool IsInvincible()
+    {
+        return invincible;
+    }
+
+    /// <summary>
+    /// make the player vincible
+    /// </summary>
+    private void BecomeNotInvincible()
+    {
+        invincible = false;
     }
 }
