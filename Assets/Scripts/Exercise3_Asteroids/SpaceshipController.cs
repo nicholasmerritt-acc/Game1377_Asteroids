@@ -31,10 +31,14 @@ public class AsteroidsPlayerController : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private GameManager gameManager;
+    [SerializeField] private AsteroidSpawner asteroidSpawner;
 
     [Header("Properties")]
     [SerializeField] private float rotationSpeed = 360f;
     [SerializeField] private float thrustForce = 10f;
+    public float InvincibleTimeout = 4f;
+    public bool Invincible = false;
 
     private float rotationInput;
     private float thrustInput;
@@ -59,7 +63,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Rotate the spaceship left or right using transform-based rotation
+    /// Rotate the spaceship left or right in 2D space.
     /// </summary>
     private void HandleRotation()
     {
@@ -117,8 +121,15 @@ public class AsteroidsPlayerController : MonoBehaviour
     /// </summary>
     private void TeleportToRandomLocation()
     {
-        float randomX = Random.Range(ScreenBounds.ScreenLeft, ScreenBounds.ScreenRight);
-        float randomY = Random.Range(ScreenBounds.ScreenBottom, ScreenBounds.ScreenTop);
-        transform.position = new Vector2(randomX, randomY);
+        transform.position = asteroidSpawner.GetRandomSafeLocation(transform.position);
+    }
+
+    public void SetGameManager(GameManager manager)
+    {
+        gameManager = manager;
+    }
+    public void SetAsteroidSpawner(AsteroidSpawner newSpawner)
+    {
+        asteroidSpawner = newSpawner;
     }
 }

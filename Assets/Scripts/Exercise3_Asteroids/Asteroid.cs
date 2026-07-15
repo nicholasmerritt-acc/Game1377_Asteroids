@@ -33,6 +33,7 @@ public class Asteroid : MonoBehaviour
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private AsteroidSpawner asteroidSpawner;
+    [SerializeField] private GameManager gameManager;
 
     void Start()
     {
@@ -81,6 +82,7 @@ public class Asteroid : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player")) {
             Destroy(collision.gameObject);
+            gameManager.OnPlayerDeath(transform.position);
         }
         else if (collision.gameObject.CompareTag("Bullet"))
         {
@@ -92,5 +94,10 @@ public class Asteroid : MonoBehaviour
     public void SetAsteroidSpawner(AsteroidSpawner newSpawner)
     {
         asteroidSpawner = newSpawner;
+    }
+
+    public void SetGameManager(GameManager manager)
+    {
+        gameManager = manager;
     }
 }
