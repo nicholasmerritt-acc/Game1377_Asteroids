@@ -21,31 +21,26 @@ public class Asteroid : MonoBehaviour
     public enum AsteroidSize { Small, Medium, Large }
 
     [SerializeField] private AsteroidSize size;
+    [SerializeField] private int childrenToSpawn = 2;
+
+    [Header("Velocities")]
     [SerializeField] private float speed;
     [SerializeField] private float minRotationSpeed = -180f;
     [SerializeField] private float maxRotationSpeed = 180f;
-    [SerializeField] private int childrenToSpawn = 2;
-    private float minVelocity = -1.0f;
-    private float maxVelocity = 1.0f;
+    [SerializeField] private float minVelocity = -1.0f;
+    [SerializeField] private float maxVelocity = 1.0f;
 
-    private Rigidbody2D rb;
-    private AsteroidSpawner asteroidSpawner;
-    private Vector2 velocity;
+    [Header("References")]
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private AsteroidSpawner asteroidSpawner;
 
     void Start()
     {
-        asteroidSpawner = FindAnyObjectByType<AsteroidSpawner>();
-        if (asteroidSpawner == null)
-        {
-            Debug.LogError("No asteroid spawner found in scene. Asteroids will not spawn.");
-        }
         rb = GetComponent<Rigidbody2D>();
 
         //set random velocity that will stay constant through the asteroid's life
         Vector2 normalizedDirection = new Vector2(Random.Range(minVelocity, maxVelocity), Random.Range(minVelocity, maxVelocity)).normalized;
-        velocity = normalizedDirection * speed;
-        rb.linearVelocity = velocity;
-
+        rb.linearVelocity = normalizedDirection * speed;
         rb.angularVelocity = Random.Range(minRotationSpeed, maxRotationSpeed);
     }
 
@@ -69,6 +64,7 @@ public class Asteroid : MonoBehaviour
     {
         if (asteroidSpawner == null)
         {
+            Debug.LogError("No asteroid spawner found, child asteroids will not spawn.");
             return;
         }
         for (int i = 0; i < childrenToSpawn; i++)
@@ -91,5 +87,10 @@ public class Asteroid : MonoBehaviour
             Destroy(collision.gameObject);
             BreakAsteroid();
         }
+    }
+
+    public void SetAsteroidSpawner(AsteroidSpawner newSpawner)
+    {
+        asteroidSpawner = newSpawner;
     }
 }

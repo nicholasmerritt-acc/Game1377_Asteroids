@@ -27,11 +27,14 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class AsteroidsPlayerController : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private float rotationSpeed = 360f;
-    [SerializeField] private float thrustForce = 10f;
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject bulletPrefab;
+
+    [Header("Properties")]
+    [SerializeField] private float rotationSpeed = 360f;
+    [SerializeField] private float thrustForce = 10f;
 
     private float rotationInput;
     private float thrustInput;
@@ -50,9 +53,6 @@ public class AsteroidsPlayerController : MonoBehaviour
         HandleHyperspace();
     }
 
-    /// <summary>
-    /// Handle physics updates
-    /// </summary>
     void FixedUpdate()
     {
         HandleThrust();
@@ -63,7 +63,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     /// </summary>
     private void HandleRotation()
     {
-        transform.Rotate(rotationInput * rotationSpeed * Vector3.back * Time.deltaTime);
+        transform.Rotate(Vector3.back * (rotationInput * rotationSpeed * Time.deltaTime));
     }
 
     /// <summary>
@@ -73,7 +73,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     {
         if (thrustInput > 0)
         {
-            rb.AddRelativeForce(thrustForce * thrustInput * Vector2.up * Time.deltaTime, ForceMode2D.Impulse);
+            rb.AddRelativeForce(Vector2.up * (thrustForce * thrustInput * Time.deltaTime), ForceMode2D.Impulse);
         }
     }
 
@@ -89,7 +89,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Create a bullet at our fire point and orient it correctly. the bullet itself will handle thrust
+    /// Create a bullet at our fire point and orient it correctly. The bullet itself should handle its own movement.
     /// </summary>
     private void FireBullet()
     {
@@ -119,7 +119,6 @@ public class AsteroidsPlayerController : MonoBehaviour
     {
         float randomX = Random.Range(ScreenBounds.ScreenLeft, ScreenBounds.ScreenRight);
         float randomY = Random.Range(ScreenBounds.ScreenBottom, ScreenBounds.ScreenTop);
-        float z = 0f;
-        transform.position = new Vector3(randomX, randomY, z);
+        transform.position = new Vector2(randomX, randomY);
     }
 }

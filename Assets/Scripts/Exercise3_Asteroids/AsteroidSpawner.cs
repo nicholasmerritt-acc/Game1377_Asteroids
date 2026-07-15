@@ -19,10 +19,8 @@ using UnityEngine;
 
 public class AsteroidSpawner : MonoBehaviour
 {
-    public GameObject asteroidPrefabLarge;
-    public GameObject asteroidPrefabMedium;
-    public GameObject asteroidPrefabSmall;
 
+    public GameObject[] AsteroidPrefabs;
     [SerializeField] private int initialAsteroids = 5;
 
     // These variables determine the spawn area for the asteroids.
@@ -49,6 +47,7 @@ public class AsteroidSpawner : MonoBehaviour
     /// </summary>
     private void SpawnInitialAsteroids()
     {
+        Vector3 playerLocation = Vector3.zero;
         for (int i = 0; i < initialAsteroids; i++)
         {
             //randomize position until it meets our safe distance criterion
@@ -58,7 +57,7 @@ public class AsteroidSpawner : MonoBehaviour
             {
                 randomPosition = new Vector3(Random.Range(spawnXMin, spawnXMax), Random.Range(spawnYMin, spawnYMax), zPosition);
 
-            } while (Vector3.Distance(randomPosition, Vector3.zero) < playerSafeDistance);
+            } while (Vector3.Distance(randomPosition, playerLocation) < playerSafeDistance);
  
             SpawnAsteroid(randomPosition, Asteroid.AsteroidSize.Large);
         }
@@ -71,23 +70,11 @@ public class AsteroidSpawner : MonoBehaviour
     /// <param name="size"></param>
     public void SpawnAsteroid(Vector3 position, Asteroid.AsteroidSize size)
     {
-        GameObject prefab;
-        switch (size)
+        GameObject spawned = Instantiate(AsteroidPrefabs[(int)size], position, Quaternion.identity);
+        Asteroid spawnedAsteroid = spawned.GetComponent<Asteroid>();
+        if (spawnedAsteroid != null)
         {
-            case Asteroid.AsteroidSize.Small:
-                prefab = asteroidPrefabSmall;
-                break;
-            case Asteroid.AsteroidSize.Medium:
-                prefab = asteroidPrefabMedium;
-                break;
-            case Asteroid.AsteroidSize.Large:
-                prefab = asteroidPrefabLarge;
-                break;
-            default:
-                Debug.LogError("Asteroid size not set. Setting to default = Large.");
-                prefab = asteroidPrefabLarge;
-                break;
+            spawnedAsteroid.SetAsteroidSpawner(this);
         }
-        Instantiate(prefab, position, Quaternion.identity);
     }
 }
