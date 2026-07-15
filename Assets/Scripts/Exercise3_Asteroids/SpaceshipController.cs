@@ -149,13 +149,17 @@ public class AsteroidsPlayerController : MonoBehaviour
         Invoke(nameof(BecomeNotInvincible), invincibleTimeout);
     }
 
+    /// <summary>
+    /// will the player ignore impact with an asteroid?
+    /// </summary>
+    /// <returns></returns>
     public bool IsInvincible()
     {
         return invincible;
     }
 
     /// <summary>
-    /// make the player vincible
+    /// make the player vincible again
     /// </summary>
     private void BecomeNotInvincible()
     {

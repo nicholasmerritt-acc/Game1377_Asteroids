@@ -74,10 +74,6 @@ public class Asteroid : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Handle collisions with only player and bullets
-    /// </summary>
-    /// <param name="collision"></param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player")) {
