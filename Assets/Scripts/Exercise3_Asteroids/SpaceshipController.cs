@@ -29,17 +29,20 @@ public class AsteroidsPlayerController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private Transform firePoint;
-    [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private GameManager gameManager;
     [SerializeField] private AsteroidSpawner asteroidSpawner;
 
-    [Header("Properties")]
+    [Header("Firing")]
+    [SerializeField] private Transform firePoint;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private float lastFireTime;
+    [SerializeField] private float fireTimeout = 1f;
+
+    [Header("Misc Properties")]
     [SerializeField] private float rotationSpeed = 360f;
     [SerializeField] private float thrustForce = 10f;
     [SerializeField] private float invincibleTimeout = 4f;
     [SerializeField] private bool invincible = false;
-
     private float rotationInput;
     private float thrustInput;
 
@@ -82,13 +85,17 @@ public class AsteroidsPlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Handle input related to firing bullets
+    /// Handle input and timing related to firing bullets
     /// </summary>
     private void HandleFire()
     {
         if (Input.GetButtonDown("Fire"))
         {
-            FireBullet();
+            if (Time.time - lastFireTime > fireTimeout)
+            {
+                FireBullet();
+                lastFireTime = Time.time;
+            }
         }
     }
 
