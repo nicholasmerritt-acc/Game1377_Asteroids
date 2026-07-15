@@ -81,8 +81,7 @@ public class Asteroid : MonoBehaviour
             {
                 if (!controller.IsInvincible())
                 {
-                    Destroy(collision.gameObject);
-                    gameManager.OnPlayerDeath(transform.position);
+                    controller.Die();
                 }
             } 
             else

@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 642762768615809231}
   - component: {fileID: 6242665358419688883}
   - component: {fileID: 6119673182708007504}
+  - component: {fileID: 6769592291571742668}
   m_Layer: 0
   m_Name: Spaceship
   m_TagString: Player
@@ -113,8 +114,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 234570467
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 6dc3172137008844191a296458b34d68, type: 3}
@@ -169,6 +170,7 @@ MonoBehaviour:
   rb: {fileID: 7819064381781324238}
   gameManager: {fileID: 0}
   asteroidSpawner: {fileID: 0}
+  animator: {fileID: 0}
   firePoint: {fileID: 4891399443925276179}
   bulletPrefab: {fileID: 3228296954555013032, guid: 52cccc2c5f12b974181a934a78b783a6, type: 3}
   lastFireTime: 0
@@ -239,3 +241,25 @@ PolygonCollider2D:
       - {x: -0.22100618, y: -0.12803374}
       - {x: 0.2252331, y: -0.14071505}
   m_UseDelaunayMesh: 1
+--- !u!95 &6769592291571742668
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2357516278731701826}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ce7bde96f28c3844fbe2d3941a0e5831, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

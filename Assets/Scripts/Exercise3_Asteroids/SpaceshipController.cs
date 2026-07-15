@@ -31,6 +31,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private GameManager gameManager;
     [SerializeField] private AsteroidSpawner asteroidSpawner;
+    [SerializeField] private Animator animator;
 
     [Header("Firing")]
     [SerializeField] private Transform firePoint;
@@ -49,6 +50,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -164,5 +166,25 @@ public class AsteroidsPlayerController : MonoBehaviour
     private void BecomeNotInvincible()
     {
         invincible = false;
+    }
+
+    /// <summary>
+    /// play animation of the player dying, then cleanup
+    /// </summary>
+    public void Die()
+    {
+        animator.SetTrigger("SpaceshipDied");
+        AnimatorClipInfo clipInfo = animator.GetCurrentAnimatorClipInfo(0)[0];
+        float currentAnimationLength = clipInfo.clip.length;
+        Invoke(nameof(DoDeathCleanup), currentAnimationLength);
+    }
+
+    /// <summary>
+    /// after the spaceship dies, we need to wait for animation to finish before destroying object and spawning new one
+    /// </summary>
+    private void DoDeathCleanup()
+    {
+        gameManager.OnPlayerDeath(transform.position);
+        Destroy(gameObject);
     }
 }
