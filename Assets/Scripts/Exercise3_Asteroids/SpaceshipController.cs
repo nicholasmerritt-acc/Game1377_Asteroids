@@ -83,6 +83,11 @@ public class AsteroidsPlayerController : MonoBehaviour
         if (thrustInput > 0)
         {
             rb.AddRelativeForce(Vector2.up * (thrustForce * thrustInput * Time.deltaTime), ForceMode2D.Impulse);
+            animator.SetBool("Thrusting", true);
+        }
+        else
+        {
+            animator.SetBool("Thrusting", false);
         }
     }
 

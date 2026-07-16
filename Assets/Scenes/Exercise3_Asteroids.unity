@@ -497,8 +497,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   PlayerPrefab: {fileID: 2357516278731701826, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
   asteroidSpawner: {fileID: 292323875}
-  Lives: 3
+  lives: 3
+  respawnDelay: 0.5
   initialSpawnLocation: {x: 0, y: 0, z: 0}
+  invincibleOnSpawn: 0
 --- !u!4 &898539623
 Transform:
   m_ObjectHideFlags: 0

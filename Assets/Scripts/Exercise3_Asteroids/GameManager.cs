@@ -6,16 +6,16 @@ public class GameManager : MonoBehaviour
     public GameObject PlayerPrefab;
     public AsteroidSpawner asteroidSpawner;
 
-    [Header("Tweakables")]
+    [Header("Respawning")]
     [SerializeField] private int lives = 3;
     [SerializeField] private float respawnDelay = .5f;
-
-    [Header("Locations")]
     [SerializeField] private Vector3 initialSpawnLocation = Vector3.zero;
+    [SerializeField] private bool invincibleOnSpawn = false;
 
     void Start()
     {
-        RespawnPlayer(false);
+        RespawnPlayer();
+        invincibleOnSpawn = true;
     }
 
     /// <summary>
@@ -27,7 +27,8 @@ public class GameManager : MonoBehaviour
         if (lives > 0)
         {
             lives--;
-            Invoke(nameof(RespawnPlayer), respawnDelay);
+            //Invoke(nameof(RespawnPlayer), respawnDelay); //TODO sometimes this causes 2 players to appear?!?!?! sppoooooky
+            RespawnPlayer();
         }
     }
 
@@ -35,7 +36,7 @@ public class GameManager : MonoBehaviour
     /// respawn in the center of the screen
     /// </summary>
     /// <param name="spawnLocation"></param>
-    private void RespawnPlayer(bool invincibleOnSpawn = true)
+    private void RespawnPlayer()
     {
         GameObject player = Instantiate(PlayerPrefab, initialSpawnLocation, PlayerPrefab.transform.rotation);
         if (player.TryGetComponent<AsteroidsPlayerController>(out var controller))
