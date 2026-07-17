@@ -69,9 +69,7 @@ public class Asteroid : MonoBehaviour
 
         //play explode animation and then destroy after animating is over
         animator.SetTrigger("AsteroidExplode");
-        AnimatorClipInfo clipInfo = animator.GetCurrentAnimatorClipInfo(0)[0];
-        float currentAnimationLength = clipInfo.clip.length;
-        Destroy(gameObject, currentAnimationLength);
+        Destroy(gameObject, animator.GetCurrentClipLength());
     }
 
     /// <summary>

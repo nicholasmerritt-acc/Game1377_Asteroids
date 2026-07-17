@@ -48,6 +48,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     [SerializeField] private float asteroidSafeDistance = 1.0f;
     [SerializeField] private float asteroidDetectionRadius = .5f;
     [SerializeField] private int maxLocationSearches = 100;
+    [SerializeField] private Vector2 teleportDestination;
 
     [Header("Powerups / Effects")]
     [SerializeField] private float invincibleTimeout = 4f;
@@ -137,28 +138,26 @@ public class AsteroidsPlayerController : MonoBehaviour
     {
         if (Input.GetButtonDown("Hyperspace"))
         {
-            TeleportToRandomLocation();
+            BeginTeleportToRandomLocation();
         }
     }
 
     /// <summary>
-    /// Staying within screen bounds, instantly transport the ship to a random location. Does not check if area is asteroid-occupied.
+    /// Staying within screen bounds, instantly transport the ship to a random safe location, with no asteroids within asteroidSafeDistance.
     /// </summary>
-    private void TeleportToRandomLocation()
+    private void BeginTeleportToRandomLocation()
     {
-        //transform.position = asteroidSpawner.GetRandomLocationAwayFromPlayer(transform.position);
-
-        Vector2 randomPosition = Vector2.zero;
+        teleportDestination = Vector2.zero;
         int searches = 0;
         do
         {
-            randomPosition = new Vector2(Random.Range(ScreenBounds.ScreenLeft, ScreenBounds.ScreenRight), Random.Range(ScreenBounds.ScreenBottom, ScreenBounds.ScreenTop));
-            RaycastHit2D hit = Physics2D.CircleCast(randomPosition, asteroidDetectionRadius, Vector2.right, asteroidSafeDistance, ~LayerMask.NameToLayer("Asteroid"));
+            teleportDestination = new Vector2(Random.Range(ScreenBounds.ScreenLeft, ScreenBounds.ScreenRight), Random.Range(ScreenBounds.ScreenBottom, ScreenBounds.ScreenTop));
+            RaycastHit2D hit = Physics2D.CircleCast(teleportDestination, asteroidDetectionRadius, Vector2.right, asteroidSafeDistance, ~LayerMask.NameToLayer("Asteroid"));
             if (hit.collider != null)
             {
                 if (gameManager.DebugMode)
                 {
-                    Debug.Log($"we hit an asteroid: {hit.collider.gameObject.name} at location: {randomPosition}");
+                    Debug.Log($"we hit an asteroid: {hit.collider.gameObject.name} at location: {teleportDestination}");
                 }
             }
             else
@@ -177,7 +176,18 @@ public class AsteroidsPlayerController : MonoBehaviour
             Debug.Log($"Took {searches} searches to find a safe spot for the player");
         }
 
-        transform.position = randomPosition;
+        // Begin playing the first half of the teleport animation.
+        animator.SetTrigger("TeleportBegin");
+        Invoke(nameof(FinishTeleporting), animator.GetCurrentClipLength());
+    }
+
+    /// <summary>
+    /// Play the last half of the animation once we have actually moved
+    /// </summary>
+    private void FinishTeleporting()
+    {
+        transform.position = teleportDestination;
+        animator.SetTrigger("TeleportEnd");
     }
 
     public void SetGameManager(GameManager manager)
@@ -217,9 +227,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     public void Die()
     {
         animator.SetTrigger("SpaceshipDied");
-        AnimatorClipInfo clipInfo = animator.GetCurrentAnimatorClipInfo(0)[0];
-        float currentAnimationLength = clipInfo.clip.length;
-        Invoke(nameof(DoDeathCleanup), currentAnimationLength);
+        Invoke(nameof(DoDeathCleanup), animator.GetCurrentClipLength());
     }
 
     /// <summary>
@@ -231,16 +239,16 @@ public class AsteroidsPlayerController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, asteroidDetectionRadius);
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(transform.position, asteroidDetectionRadius);
 
-        Gizmos.color = Color.yellow;
-        Vector2 endpos = transform.position + transform.right * asteroidSafeDistance;
-        Gizmos.DrawWireSphere(endpos, asteroidDetectionRadius);
+    //    Gizmos.color = Color.yellow;
+    //    Vector2 endpos = transform.position + transform.right * asteroidSafeDistance;
+    //    Gizmos.DrawWireSphere(endpos, asteroidDetectionRadius);
 
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(transform.position, endpos);
-    }
+    //    Gizmos.color = Color.green;
+    //    Gizmos.DrawLine(transform.position, endpos);
+    //}
 }
