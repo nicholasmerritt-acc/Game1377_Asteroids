@@ -31,9 +31,9 @@ Requirements
 
 **Fire**
 
-- [ ] Add an animation for bullet
-- [ ] Add sound effect for the bullet firing.
-- [ ] Add a cooldown to firing to prevent spamming the fire button.
+- [x] Add an animation for bullet
+- [x] Add sound effect for the bullet firing.
+- [x] Add a cooldown to firing to prevent spamming the fire button.
 
 **Thrust**
 
