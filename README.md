@@ -26,21 +26,23 @@ Requirements
 **Hyperspace**
 
 - [x] Improve the Hyperspace method so the player will not spawn where they can potentially hit an asteroid.
-- [ ] Add an animation and sound effect for hyperspace.
+- [x] Add an animation for hyperspace
+- [ ] Add sound effect for hyperspace.
 
 **Fire**
 
-- [ ] Add an animation and sound effect for the bullet firing.
+- [ ] Add an animation for bullet
+- [ ] Add sound effect for the bullet firing.
 - [ ] Add a cooldown to firing to prevent spamming the fire button.
 
 **Thrust**
 
-- [x] Add an animation
+- [x] Add an animation for thrust
 - [ ] Add sound effect for the ship moving forward.
 
 **Asteroid/Asteroid Spawner**
 
-- [x] Add an animation
+- [x] Add an animation for explode
 - [ ] Add sound effect for the asteroids exploding.
 
 **Power Ups**
