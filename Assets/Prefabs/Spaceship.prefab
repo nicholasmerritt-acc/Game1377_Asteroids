@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4891399443925276179}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 6242665358419688883}
   - component: {fileID: 6119673182708007504}
   - component: {fileID: 6769592291571742668}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Spaceship
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -171,7 +171,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AsteroidsController
   rb: {fileID: 7819064381781324238}
   gameManager: {fileID: 0}
-  asteroidSpawner: {fileID: 0}
   animator: {fileID: 0}
   firePoint: {fileID: 4891399443925276179}
   bulletPrefab: {fileID: 3228296954555013032, guid: 52cccc2c5f12b974181a934a78b783a6, type: 3}
@@ -179,7 +178,12 @@ MonoBehaviour:
   fireTimeout: 1
   rotationSpeed: 250
   thrustForce: 10
-  invincibleTimeout: 4
+  rotationInput: 0
+  thrustInput: 0
+  asteroidSafeDistance: 1
+  asteroidDetectionRadius: 1
+  maxLocationSearches: 500
+  invincibleTimeout: 3
   invincible: 0
 --- !u!114 &6242665358419688883
 MonoBehaviour:
@@ -274,7 +278,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9135231040528261587}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Thrust
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -306,7 +310,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2962211186921706951}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Engine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,7 +343,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7930591467559515754}
   - component: {fileID: 4136806910245966642}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ThrustGlow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -430,7 +434,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2809948250675578953}
   - component: {fileID: 4355852372698753173}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PulseEngine
   m_TagString: Untagged
   m_Icon: {fileID: 0}

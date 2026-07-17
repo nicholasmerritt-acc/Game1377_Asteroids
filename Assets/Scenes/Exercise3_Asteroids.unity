@@ -296,7 +296,7 @@ MonoBehaviour:
   - {fileID: 8730189705238761009, guid: 91552452341758443a49a0520fe30970, type: 3}
   gameManager: {fileID: 898539622}
   initialAsteroids: 5
-  playerSafeDistance: 3
+  initialPlayerSafeDistance: 3
   maxLocationSearches: 1000
 --- !u!1 &622455421
 GameObject:
@@ -495,6 +495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cdd362ebdeee264a9a345027b2aa9f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  DebugMode: 1
   PlayerPrefab: {fileID: 2357516278731701826, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
   asteroidSpawner: {fileID: 292323875}
   lives: 3

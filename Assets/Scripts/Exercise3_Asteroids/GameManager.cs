@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public bool DebugMode = true;
+
     [Header("References")]
     public GameObject PlayerPrefab;
     public AsteroidSpawner asteroidSpawner;
@@ -42,7 +44,6 @@ public class GameManager : MonoBehaviour
         if (player.TryGetComponent<AsteroidsPlayerController>(out var controller))
         {
             controller.SetGameManager(this);
-            controller.SetAsteroidSpawner(asteroidSpawner);
             if (invincibleOnSpawn)
             {
                 controller.BecomeInvincible();

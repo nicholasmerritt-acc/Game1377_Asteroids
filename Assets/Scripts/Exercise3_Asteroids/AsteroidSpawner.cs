@@ -25,8 +25,8 @@ public class AsteroidSpawner : MonoBehaviour
 
     [Header("Properties")]
     [SerializeField] private int initialAsteroids = 5;
-    [SerializeField] private float playerSafeDistance = 3;
-    [SerializeField] private float maxLocationSearches = 10000;
+    [SerializeField] private float initialPlayerSafeDistance = 3;
+    [SerializeField] private float maxLocationSearches = 100;
 
     // These variables determine the spawn area for the asteroids.
     // They are calculated at Start based off of the camera size. 
@@ -39,10 +39,10 @@ public class AsteroidSpawner : MonoBehaviour
     {
         float screenHalfHeight = Camera.main.orthographicSize;
         float screenHalfWidth = Camera.main.aspect * screenHalfHeight;
-        spawnXMax = screenHalfWidth + playerSafeDistance;
-        spawnXMin = -screenHalfWidth - playerSafeDistance;
-        spawnYMax = screenHalfHeight + playerSafeDistance;
-        spawnYMin = -screenHalfHeight - playerSafeDistance;
+        spawnXMax = screenHalfWidth + initialPlayerSafeDistance;
+        spawnXMin = -screenHalfWidth - initialPlayerSafeDistance;
+        spawnYMax = screenHalfHeight + initialPlayerSafeDistance;
+        spawnYMin = -screenHalfHeight - initialPlayerSafeDistance;
         SpawnInitialAsteroids();
     }
 
@@ -54,25 +54,29 @@ public class AsteroidSpawner : MonoBehaviour
         Vector3 playerLocation = Vector3.zero;
         for (int i = 0; i < initialAsteroids; i++)
         {
-            SpawnAsteroid(GetRandomSafeLocation(playerLocation), Asteroid.AsteroidSize.Large);
+            SpawnAsteroid(GetRandomLocationAwayFromPlayer(playerLocation), Asteroid.AsteroidSize.Large);
         }
     }
 
     /// <summary>
-    /// Find a location for the player to spawn without fear of hitting an asteroid
+    /// Find a location for the asteroids to spawn
     /// </summary>
     /// <param name="playerLocation"></param>
     /// <returns></returns>
-    public Vector3 GetRandomSafeLocation(Vector2 playerLocation)
+    public Vector3 GetRandomLocationAwayFromPlayer(Vector2 playerLocation)
     {
         Vector2 randomPosition;
         int searches = 0;
         do
         {
-            randomPosition = new Vector2(Random.Range(ScreenBounds.ScreenLeft, ScreenBounds.ScreenRight), Random.Range(ScreenBounds.ScreenBottom, ScreenBounds.ScreenTop));
+            randomPosition = new Vector2(Random.Range(spawnXMin, spawnXMax), Random.Range(spawnYMin, spawnYMax));
 
-        } while (Vector2.Distance(randomPosition, playerLocation) < playerSafeDistance && ++searches < maxLocationSearches);
-        Debug.Log($"Took {searches} searches to find a safe spot");
+        } while (Vector2.Distance(randomPosition, playerLocation) < initialPlayerSafeDistance && ++searches < maxLocationSearches);
+
+        if (gameManager.DebugMode)
+        {
+            Debug.Log($"Took {searches} searches to find a safe spot for an asteroid");
+        }
         return randomPosition;
     }
 
@@ -87,8 +91,8 @@ public class AsteroidSpawner : MonoBehaviour
         if (spawned.TryGetComponent<Asteroid>(out var spawnedAsteroid))
         {
             spawnedAsteroid.SetAsteroidSpawner(this);
-            spawnedAsteroid.SetGameManager(gameManager);
-        } else
+        }
+        else
         {
             Debug.LogError("Asteroid prefabs not set up correctly!");
         }

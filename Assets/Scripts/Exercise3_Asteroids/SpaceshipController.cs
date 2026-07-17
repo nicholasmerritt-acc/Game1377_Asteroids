@@ -30,7 +30,6 @@ public class AsteroidsPlayerController : MonoBehaviour
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private GameManager gameManager;
-    [SerializeField] private AsteroidSpawner asteroidSpawner;
     [SerializeField] private Animator animator;
 
     [Header("Firing")]
@@ -39,13 +38,20 @@ public class AsteroidsPlayerController : MonoBehaviour
     [SerializeField] private float lastFireTime;
     [SerializeField] private float fireTimeout = 1f;
 
-    [Header("Misc Properties")]
+    [Header("Movement")]
     [SerializeField] private float rotationSpeed = 360f;
     [SerializeField] private float thrustForce = 10f;
+    [SerializeField] private float rotationInput;
+    [SerializeField] private float thrustInput;
+
+    [Header("Teleporting")]
+    [SerializeField] private float asteroidSafeDistance = 1.0f;
+    [SerializeField] private float asteroidDetectionRadius = .5f;
+    [SerializeField] private int maxLocationSearches = 100;
+
+    [Header("Powerups / Effects")]
     [SerializeField] private float invincibleTimeout = 4f;
     [SerializeField] private bool invincible = false;
-    private float rotationInput;
-    private float thrustInput;
 
     void Start()
     {
@@ -55,11 +61,16 @@ public class AsteroidsPlayerController : MonoBehaviour
 
     void Update()
     {
-        rotationInput = Input.GetAxis("Horizontal");
-        thrustInput = Input.GetAxis("Vertical");
+        HandleInput();
         HandleRotation();
         HandleFire();
         HandleHyperspace();
+    }
+
+    private void HandleInput()
+    {
+        rotationInput = Input.GetAxis("Horizontal");
+        thrustInput = Input.GetAxis("Vertical");
     }
 
     void FixedUpdate()
@@ -135,16 +146,43 @@ public class AsteroidsPlayerController : MonoBehaviour
     /// </summary>
     private void TeleportToRandomLocation()
     {
-        transform.position = asteroidSpawner.GetRandomSafeLocation(transform.position);
+        //transform.position = asteroidSpawner.GetRandomLocationAwayFromPlayer(transform.position);
+
+        Vector2 randomPosition = Vector2.zero;
+        int searches = 0;
+        do
+        {
+            randomPosition = new Vector2(Random.Range(ScreenBounds.ScreenLeft, ScreenBounds.ScreenRight), Random.Range(ScreenBounds.ScreenBottom, ScreenBounds.ScreenTop));
+            RaycastHit2D hit = Physics2D.CircleCast(randomPosition, asteroidDetectionRadius, Vector2.right, asteroidSafeDistance, ~LayerMask.NameToLayer("Asteroid"));
+            if (hit.collider != null)
+            {
+                if (gameManager.DebugMode)
+                {
+                    Debug.Log($"we hit an asteroid: {hit.collider.gameObject.name} at location: {randomPosition}");
+                }
+            }
+            else
+            {
+                if (gameManager.DebugMode)
+                {
+                    Debug.Log("no asteroids nearby");
+                }
+                break;
+            }
+
+        } while (++searches < maxLocationSearches);
+
+        if (gameManager.DebugMode)
+        {
+            Debug.Log($"Took {searches} searches to find a safe spot for the player");
+        }
+
+        transform.position = randomPosition;
     }
 
     public void SetGameManager(GameManager manager)
     {
         gameManager = manager;
-    }
-    public void SetAsteroidSpawner(AsteroidSpawner newSpawner)
-    {
-        asteroidSpawner = newSpawner;
     }
 
     /// <summary>
@@ -191,5 +229,18 @@ public class AsteroidsPlayerController : MonoBehaviour
     {
         gameManager.OnPlayerDeath(transform.position);
         Destroy(gameObject);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, asteroidDetectionRadius);
+
+        Gizmos.color = Color.yellow;
+        Vector2 endpos = transform.position + transform.right * asteroidSafeDistance;
+        Gizmos.DrawWireSphere(endpos, asteroidDetectionRadius);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(transform.position, endpos);
     }
 }
