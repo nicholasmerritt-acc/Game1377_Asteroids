@@ -16,6 +16,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
 public class Asteroid : MonoBehaviour
 {
     public enum AsteroidSize { Small, Medium, Large }
@@ -32,14 +33,23 @@ public class Asteroid : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Animator animator;
     [SerializeField] private AsteroidSpawner asteroidSpawner;
     [SerializeField] private GameManager gameManager;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
 
-        //set random velocity that will stay constant through the asteroid's life
+        SetInitialVelocities();
+    }
+
+    /// <summary>
+    /// set random linear and angular velocities that will stay constant through the asteroid's life
+    /// </summary>
+    private void SetInitialVelocities()
+    {
         Vector2 normalizedDirection = new Vector2(Random.Range(minVelocity, maxVelocity), Random.Range(minVelocity, maxVelocity)).normalized;
         rb.linearVelocity = normalizedDirection * speed;
         rb.angularVelocity = Random.Range(minRotationSpeed, maxRotationSpeed);
@@ -54,7 +64,16 @@ public class Asteroid : MonoBehaviour
         {
             SpawnChildren(size - 1);
         }
-        Destroy(gameObject);
+        //disable collider while animating
+        if (TryGetComponent<Collider>(out Collider collider)) {
+            collider.enabled = false;
+        }
+
+        //play explode animation and then destroy after animating is over
+        animator.SetTrigger("AsteroidExplode");
+        AnimatorClipInfo clipInfo = animator.GetCurrentAnimatorClipInfo(0)[0];
+        float currentAnimationLength = clipInfo.clip.length;
+        Destroy(gameObject, currentAnimationLength);
     }
 
     /// <summary>
