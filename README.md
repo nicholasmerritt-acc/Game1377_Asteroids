@@ -25,7 +25,7 @@ Requirements
 
 **Hyperspace**
 
-- [ ] Improve the Hyperspace method so the player will not spawn where they can potentially hit an asteroid.
+- [x] Improve the Hyperspace method so the player will not spawn where they can potentially hit an asteroid.
 - [ ] Add an animation and sound effect for hyperspace.
 
 **Fire**
@@ -35,11 +35,13 @@ Requirements
 
 **Thrust**
 
-- [ ] Add an animation and sound effect for the ship moving forward.
+- [x] Add an animation
+- [ ] Add sound effect for the ship moving forward.
 
 **Asteroid/Asteroid Spawner**
 
-- [ ] Add an animation and sound effect for the asteroids exploding.
+- [x] Add an animation
+- [ ] Add sound effect for the asteroids exploding.
 
 **Power Ups**
 
