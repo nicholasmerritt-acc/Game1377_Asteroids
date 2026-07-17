@@ -23,8 +23,9 @@ public class Asteroid : MonoBehaviour
 
     [SerializeField] private AsteroidSize size;
     [SerializeField] private int childrenToSpawn = 2;
+    [SerializeField] private bool destructionInProgress = false;
 
-    [Header("Velocities")]
+    [Header("Velocity / Rotation")]
     [SerializeField] private float speed;
     [SerializeField] private float minRotationSpeed = -180f;
     [SerializeField] private float maxRotationSpeed = 180f;
@@ -35,7 +36,6 @@ public class Asteroid : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator animator;
     [SerializeField] private AsteroidSpawner asteroidSpawner;
-    [SerializeField] private GameManager gameManager;
 
     void Start()
     {
@@ -64,10 +64,8 @@ public class Asteroid : MonoBehaviour
         {
             SpawnChildren(size - 1);
         }
-        //disable collider while animating
-        if (TryGetComponent<Collider>(out Collider collider)) {
-            collider.enabled = false;
-        }
+        //disable collisions while animating
+        destructionInProgress = true;
 
         //play explode animation and then destroy after animating is over
         animator.SetTrigger("AsteroidExplode");
@@ -95,6 +93,10 @@ public class Asteroid : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (destructionInProgress)
+        {
+            return;
+        }
         if (collision.gameObject.CompareTag("Player")) {
             if (collision.gameObject.TryGetComponent<AsteroidsPlayerController>(out AsteroidsPlayerController controller))
             {
@@ -118,10 +120,5 @@ public class Asteroid : MonoBehaviour
     public void SetAsteroidSpawner(AsteroidSpawner newSpawner)
     {
         asteroidSpawner = newSpawner;
-    }
-
-    public void SetGameManager(GameManager manager)
-    {
-        gameManager = manager;
     }
 }
