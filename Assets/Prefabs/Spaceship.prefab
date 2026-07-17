@@ -267,7 +267,7 @@ MonoBehaviour:
   firePoint: {fileID: 4891399443925276179}
   bulletPrefab: {fileID: 3228296954555013032, guid: 52cccc2c5f12b974181a934a78b783a6, type: 3}
   lastFireTime: 0
-  fireTimeout: 1
+  fireTimeout: 0.5
   rotationSpeed: 250
   thrustForce: 10
   rotationInput: 0
@@ -275,6 +275,7 @@ MonoBehaviour:
   asteroidSafeDistance: 1
   asteroidDetectionRadius: 1
   maxLocationSearches: 500
+  teleportDestination: {x: 0, y: 0}
   invincibleTimeout: 3
   invincible: 0
 --- !u!114 &6242665358419688883
