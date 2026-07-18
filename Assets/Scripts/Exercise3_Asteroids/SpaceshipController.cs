@@ -45,6 +45,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float lastFireTime;
     [SerializeField] private float fireTimeout = 1f;
+    [SerializeField] private float bulletSize = 1f;
 
     [Header("Movement")]
     [SerializeField] private float rotationSpeed = 360f;
@@ -61,6 +62,16 @@ public class AsteroidsPlayerController : MonoBehaviour
     [Header("Powerups / Effects")]
     [SerializeField] private float invincibleTimeout = 4f;
     [SerializeField] private bool invincible = false;
+    [SerializeField] private bool destructionInProgress = false;
+    public GameObject[] PowerupPrefabs;
+
+    public enum Powerup
+    {
+        Rocket,
+        Life,
+        Move
+    }
+
 
     void Start()
     {
@@ -222,6 +233,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     /// </summary>
     public void Die()
     {
+        destructionInProgress = true;
         animator.SetTrigger("SpaceshipDied");
         audioSource.PlayOneShot(spaceshipDeathAudio);
         Invoke(nameof(DoDeathCleanup), animator.GetCurrentClipLength());
@@ -234,5 +246,38 @@ public class AsteroidsPlayerController : MonoBehaviour
     {
         gameManager.OnPlayerDeath(transform.position);
         Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (destructionInProgress)
+        {
+            return;
+        }
+        if (collision.gameObject.CompareTag("PowerupRocket"))
+        {
+            Destroy(collision.gameObject);
+        }
+        else if (collision.gameObject.CompareTag("PowerupLife"))
+        {
+            Destroy(collision.gameObject);
+        }
+        else if (collision.gameObject.CompareTag("PowerupMove"))
+        {
+            Destroy(collision.gameObject);
+        }
+    }
+
+    private void HandlePowerup(Powerup which)
+    {
+        switch (which)
+        {
+            case Powerup.Rocket:
+                break;
+            case Powerup.Life:
+                break;
+            case Powerup.Move:
+                break;
+        }
     }
 }
