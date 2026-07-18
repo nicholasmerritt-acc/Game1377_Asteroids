@@ -25,12 +25,19 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(AudioSource))]
 public class AsteroidsPlayerController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private GameManager gameManager;
     [SerializeField] private Animator animator;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip spaceshipDeathAudio;
+    [SerializeField] private AudioClip spaceshipTeleportAudio;
 
     [Header("Firing")]
     [SerializeField] private Transform firePoint;
@@ -58,6 +65,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -178,6 +186,7 @@ public class AsteroidsPlayerController : MonoBehaviour
 
         // Begin playing the first half of the teleport animation.
         animator.SetTrigger("TeleportBegin");
+        audioSource.PlayOneShot(spaceshipTeleportAudio);
         Invoke(nameof(FinishTeleporting), animator.GetCurrentClipLength());
     }
 
@@ -227,6 +236,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     public void Die()
     {
         animator.SetTrigger("SpaceshipDied");
+        audioSource.PlayOneShot(spaceshipDeathAudio);
         Invoke(nameof(DoDeathCleanup), animator.GetCurrentClipLength());
     }
 

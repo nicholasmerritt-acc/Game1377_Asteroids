@@ -17,6 +17,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(AudioSource))]
 public class Asteroid : MonoBehaviour
 {
     public enum AsteroidSize { Small, Medium, Large }
@@ -37,10 +38,15 @@ public class Asteroid : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private AsteroidSpawner asteroidSpawner;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip asteroidExplodeAudio;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
 
         SetInitialVelocities();
     }
@@ -69,6 +75,7 @@ public class Asteroid : MonoBehaviour
 
         //play explode animation and then destroy after animating is over
         animator.SetTrigger("AsteroidExplode");
+        audioSource.PlayOneShot(asteroidExplodeAudio);
         Destroy(gameObject, animator.GetCurrentClipLength());
     }
 
