@@ -21,13 +21,13 @@ Requirements
 - [x] They should respawn at the center (0,0,0) on the screen.
 - [x] They should be invincible for a few seconds to allow them to avoid asteroids.
 - [x] Add an animation
-- [ ] Add sound effect for when the player dies.
+- [x] Add sound effect for when the player dies.
 
 **Hyperspace**
 
 - [x] Improve the Hyperspace method so the player will not spawn where they can potentially hit an asteroid.
 - [x] Add an animation for hyperspace
-- [ ] Add sound effect for hyperspace.
+- [x] Add sound effect for hyperspace.
 
 **Fire**
 
@@ -43,7 +43,7 @@ Requirements
 **Asteroid/Asteroid Spawner**
 
 - [x] Add an animation for explode
-- [ ] Add sound effect for the asteroids exploding.
+- [x] Add sound effect for the asteroids exploding.
 
 **Power Ups**
 
