@@ -38,6 +38,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip spaceshipDeathAudio;
     [SerializeField] private AudioClip spaceshipTeleportAudio;
+    [SerializeField] private EngineAudio engineAudio;
 
     [Header("Firing")]
     [SerializeField] private Transform firePoint;
@@ -104,10 +105,12 @@ public class AsteroidsPlayerController : MonoBehaviour
         {
             rb.AddRelativeForce(Vector2.up * (thrustForce * thrustInput * Time.deltaTime), ForceMode2D.Impulse);
             animator.SetBool("Thrusting", true);
+            engineAudio.Play();
         }
         else
         {
             animator.SetBool("Thrusting", false);
+            engineAudio.Pause();
         }
     }
 
@@ -161,28 +164,12 @@ public class AsteroidsPlayerController : MonoBehaviour
         {
             teleportDestination = new Vector2(Random.Range(ScreenBounds.ScreenLeft, ScreenBounds.ScreenRight), Random.Range(ScreenBounds.ScreenBottom, ScreenBounds.ScreenTop));
             RaycastHit2D hit = Physics2D.CircleCast(teleportDestination, asteroidDetectionRadius, Vector2.right, asteroidSafeDistance, ~LayerMask.NameToLayer("Asteroid"));
-            if (hit.collider != null)
+            if (hit.collider == null)
             {
-                if (gameManager.DebugMode)
-                {
-                    Debug.Log($"we hit an asteroid: {hit.collider.gameObject.name} at location: {teleportDestination}");
-                }
-            }
-            else
-            {
-                if (gameManager.DebugMode)
-                {
-                    Debug.Log("no asteroids nearby");
-                }
                 break;
             }
 
         } while (++searches < maxLocationSearches);
-
-        if (gameManager.DebugMode)
-        {
-            Debug.Log($"Took {searches} searches to find a safe spot for the player");
-        }
 
         // Begin playing the first half of the teleport animation.
         animator.SetTrigger("TeleportBegin");
@@ -248,17 +235,4 @@ public class AsteroidsPlayerController : MonoBehaviour
         gameManager.OnPlayerDeath(transform.position);
         Destroy(gameObject);
     }
-
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawWireSphere(transform.position, asteroidDetectionRadius);
-
-    //    Gizmos.color = Color.yellow;
-    //    Vector2 endpos = transform.position + transform.right * asteroidSafeDistance;
-    //    Gizmos.DrawWireSphere(endpos, asteroidDetectionRadius);
-
-    //    Gizmos.color = Color.green;
-    //    Gizmos.DrawLine(transform.position, endpos);
-    //}
 }

@@ -2,15 +2,12 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public bool DebugMode = true;
-
     [Header("References")]
     public GameObject PlayerPrefab;
     public AsteroidSpawner asteroidSpawner;
 
     [Header("Respawning")]
     [SerializeField] private int lives = 3;
-    [SerializeField] private float respawnDelay = .5f;
     [SerializeField] private Vector3 initialSpawnLocation = Vector3.zero;
     [SerializeField] private bool invincibleOnSpawn = false;
 
@@ -29,7 +26,6 @@ public class GameManager : MonoBehaviour
         if (lives > 0)
         {
             lives--;
-            //Invoke(nameof(RespawnPlayer), respawnDelay); //TODO sometimes this causes 2 players to appear?!?!?! sppoooooky
             RespawnPlayer();
         }
     }

@@ -72,11 +72,6 @@ public class AsteroidSpawner : MonoBehaviour
             randomPosition = new Vector2(Random.Range(spawnXMin, spawnXMax), Random.Range(spawnYMin, spawnYMax));
 
         } while (Vector2.Distance(randomPosition, playerLocation) < initialPlayerSafeDistance && ++searches < maxLocationSearches);
-
-        if (gameManager.DebugMode)
-        {
-            Debug.Log($"Took {searches} searches to find a safe spot for an asteroid");
-        }
         return randomPosition;
     }
 
