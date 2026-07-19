@@ -61,6 +61,7 @@ public class AsteroidsPlayerController : MonoBehaviour
 
     [Header("Powerups / Effects")]
     [SerializeField] private float invincibleTimeout = 4f;
+    [SerializeField] private float powerupTimeout = 4f;
     [SerializeField] private bool invincible = false;
     [SerializeField] private bool destructionInProgress = false;
     public GameObject[] PowerupPrefabs;
@@ -256,14 +257,17 @@ public class AsteroidsPlayerController : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("PowerupRocket"))
         {
+            HandlePowerup(Powerup.Rocket);
             Destroy(collision.gameObject);
         }
         else if (collision.gameObject.CompareTag("PowerupLife"))
         {
+            HandlePowerup(Powerup.Life);
             Destroy(collision.gameObject);
         }
         else if (collision.gameObject.CompareTag("PowerupMove"))
         {
+            HandlePowerup(Powerup.Move);
             Destroy(collision.gameObject);
         }
     }
@@ -275,6 +279,7 @@ public class AsteroidsPlayerController : MonoBehaviour
             case Powerup.Rocket:
                 break;
             case Powerup.Life:
+                gameManager.AddLife();
                 break;
             case Powerup.Move:
                 break;

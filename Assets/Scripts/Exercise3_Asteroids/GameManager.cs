@@ -50,4 +50,12 @@ public class GameManager : MonoBehaviour
             Debug.LogError("Player prefab is missing Player Controller component!");
         }
     }
+
+    /// <summary>
+    /// give the player an extra life
+    /// </summary>
+    public void AddLife()
+    {
+        lives++;
+    }
 }
