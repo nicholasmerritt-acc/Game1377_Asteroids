@@ -72,14 +72,6 @@ public class AsteroidsPlayerController : MonoBehaviour
     [SerializeField] private float powerupTimeout = 4f;
     [SerializeField] private bool invincible = false;
     [SerializeField] private bool destructionInProgress = false;
-    public GameObject[] PowerupPrefabs;
-
-    public enum Powerup
-    {
-        Rocket,
-        Life,
-        Move
-    }
 
     void Start()
     {
@@ -265,17 +257,17 @@ public class AsteroidsPlayerController : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("PowerupRocket"))
         {
-            HandlePowerup(Powerup.Rocket);
+            HandlePowerup(Powerup.PowerupType.Rocket);
             Destroy(collision.gameObject);
         }
         else if (collision.gameObject.CompareTag("PowerupLife"))
         {
-            HandlePowerup(Powerup.Life);
+            HandlePowerup(Powerup.PowerupType.Life);
             Destroy(collision.gameObject);
         }
         else if (collision.gameObject.CompareTag("PowerupMove"))
         {
-            HandlePowerup(Powerup.Move);
+            HandlePowerup(Powerup.PowerupType.Move);
             Destroy(collision.gameObject);
         }
     }
@@ -284,17 +276,17 @@ public class AsteroidsPlayerController : MonoBehaviour
     /// Player has picked up a powerup. activate the corresponding ability
     /// </summary>
     /// <param name="which"></param>
-    private void HandlePowerup(Powerup which)
+    private void HandlePowerup(Powerup.PowerupType which)
     {
         switch (which)
         {
-            case Powerup.Rocket:
+            case Powerup.PowerupType.Rocket:
                 PowerupRocket();
                 break;
-            case Powerup.Life:
+            case Powerup.PowerupType.Life:
                 gameManager.AddLife();
                 break;
-            case Powerup.Move:
+            case Powerup.PowerupType.Move:
                 PowerupMove();
                 break;
         }

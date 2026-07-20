@@ -7,7 +7,6 @@ public class PowerupSpawner : MonoBehaviour
     [SerializeField] private int maxPowerups = 3;
     public GameObject[] PowerupPrefabs;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         InvokeRepeating(nameof(SpawnPowerup), initialSpawnWaitTime, spawnRepeatInterval);
