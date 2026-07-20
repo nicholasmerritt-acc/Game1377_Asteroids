@@ -45,13 +45,21 @@ public class AsteroidsPlayerController : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float lastFireTime;
     [SerializeField] private float fireTimeout = 1f;
-    [SerializeField] private float bulletSize = 1f;
+    [SerializeField] private float initialBulletSize = .1f;
+    [SerializeField] private float bulletSize = .1f;
+    [SerializeField] private float bulletSizeIncrement = .2f;
 
-    [Header("Movement")]
-    [SerializeField] private float rotationSpeed = 360f;
+    [Header("Thrust")]
+    [SerializeField] private float initialThrustForce = 10f;
     [SerializeField] private float thrustForce = 10f;
-    [SerializeField] private float rotationInput;
+    [SerializeField] private float thrustForceIncrement = 4f;
     [SerializeField] private float thrustInput;
+
+    [Header("Rotation")]
+    [SerializeField] private float initialRotationSpeed = 360f;
+    [SerializeField] private float rotationSpeed = 360f;
+    [SerializeField] private float rotationSpeedIncrement = 30f;
+    [SerializeField] private float rotationInput;
 
     [Header("Teleporting")]
     [SerializeField] private float asteroidSafeDistance = 1.0f;
@@ -72,7 +80,6 @@ public class AsteroidsPlayerController : MonoBehaviour
         Life,
         Move
     }
-
 
     void Start()
     {
@@ -151,7 +158,8 @@ public class AsteroidsPlayerController : MonoBehaviour
             Debug.LogWarning("Bullet prefab not assigned!");
             return;
         }
-        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        GameObject bulletObject = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        bulletObject.transform.localScale = Vector3.one * bulletSize;
     }
 
     /// <summary>
@@ -272,17 +280,59 @@ public class AsteroidsPlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Player has picked up a powerup. activate the corresponding ability
+    /// </summary>
+    /// <param name="which"></param>
     private void HandlePowerup(Powerup which)
     {
         switch (which)
         {
             case Powerup.Rocket:
+                PowerupRocket();
                 break;
             case Powerup.Life:
                 gameManager.AddLife();
                 break;
             case Powerup.Move:
+                PowerupMove();
                 break;
         }
+    }
+
+    /// <summary>
+    /// apply powerup that increases rotation speed and movement speed for a limited time
+    /// </summary>
+    private void PowerupMove()
+    {
+        rotationSpeed += rotationSpeedIncrement;
+        thrustForce += thrustForceIncrement;
+        Invoke(nameof(PowerupMoveReset), powerupTimeout);
+    }
+
+    /// <summary>
+    /// reset movement speed and rotation to normal
+    /// </summary>
+    private void PowerupMoveReset()
+    {
+        rotationSpeed = initialRotationSpeed;
+        thrustForce = initialThrustForce;
+    }
+
+    /// <summary>
+    /// apply powerup which increases bullet size for a limited time
+    /// </summary>
+    private void PowerupRocket()
+    {
+        bulletSize += bulletSizeIncrement;
+        Invoke(nameof(PowerupRocketReset), powerupTimeout);
+    }
+
+    /// <summary>
+    /// reset bullet size to normal
+    /// </summary>
+    private void PowerupRocketReset()
+    {
+        bulletSize = initialBulletSize;
     }
 }

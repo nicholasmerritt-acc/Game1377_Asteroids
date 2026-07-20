@@ -273,16 +273,26 @@ MonoBehaviour:
   bulletPrefab: {fileID: 3228296954555013032, guid: 52cccc2c5f12b974181a934a78b783a6, type: 3}
   lastFireTime: 0
   fireTimeout: 0.5
-  rotationSpeed: 250
+  initialBulletSize: 0.1
+  bulletSize: 0.1
+  bulletSizeIncrement: 0.2
+  initialThrustForce: 10
   thrustForce: 10
-  rotationInput: 0
+  thrustForceIncrement: 4
   thrustInput: 0
+  initialRotationSpeed: 200
+  rotationSpeed: 200
+  rotationSpeedIncrement: 100
+  rotationInput: 0
   asteroidSafeDistance: 1
   asteroidDetectionRadius: 1
   maxLocationSearches: 500
   teleportDestination: {x: 0, y: 0}
   invincibleTimeout: 3
+  powerupTimeout: 6
   invincible: 0
+  destructionInProgress: 0
+  PowerupPrefabs: []
 --- !u!114 &6242665358419688883
 MonoBehaviour:
   m_ObjectHideFlags: 0
