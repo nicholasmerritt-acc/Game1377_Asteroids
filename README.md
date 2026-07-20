@@ -1,19 +1,14 @@
-# Game1377_Exercise3
+# Game1377 Exercise 5: Asteroids Part 3
 
+**New Classes in this Part:**
 
-Assignment: Asteroids Game
+- [GameManager](Assets/Scripts/Exercise3_Asteroids/GameManager.cs) for handling game state
+- [ExtensionMethods](Assets/Scripts/Exercise3_Asteroids/ExtensionMethods.cs) for extending the unity Animation class (and maybe other stuff in the future. it's fun.) sure sure there's definitely a simpler way, but this way was fancy and cool.
+- [EngineAudio](Assets/Scripts/Exercise3_Asteroids/EngineAudio.cs) for separating constant engine thrust sound from OneShots
+- [Powerup](Assets/Scripts/Exercise3_Asteroids/Powerup.cs) for handling the Powerups count and enum
+- [PowerupSpawner](Assets/Scripts/Exercise3_Asteroids/PowerupSpawner.cs) for spawning powerups at an interval.
 
-**Objective:**
-Implement a prototype of the game Asteroids. Be sure to set your Aspect Ratio to 4:3 in the Game view
-
-**Part 3:**
-
-Objective:
-
-Replace the existing sprites to add better visuals and add audio effects to the game. Also, add power ups to the game that influence the functionality. You should also add three power ups. You can find these assets for these yourself or use some from this link here: https://foozlecc.itch.io/.
-
-
-Requirements
+**Feature checklist (everything done)**
 
 **Lives**
 
@@ -50,4 +45,3 @@ Requirements
 - [x] One power up should increase the number of lives you have.
 - [x] One power up should increase the spaceship movement and rotation speed for a limited amount of time.
 - [x] One power up should increase the size of your bullets for a limited amount of time.
-- [nah] more if time
