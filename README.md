@@ -38,7 +38,7 @@ Requirements
 **Thrust**
 
 - [x] Add an animation for thrust
-- [ ] Add sound effect for the ship moving forward.
+- [x] Add sound effect for the ship moving forward.
 
 **Asteroid/Asteroid Spawner**
 
@@ -47,7 +47,7 @@ Requirements
 
 **Power Ups**
 
-- [ ] One power up should increase the number of lives you have.
-- [ ] One power up should increase the spaceship movement and rotation speed for a limited amount of time.
-- [ ] One power up should increase the size of your bullets for a limited amount of time.
-- [ ] more if time
+- [x] One power up should increase the number of lives you have.
+- [x] One power up should increase the spaceship movement and rotation speed for a limited amount of time.
+- [x] One power up should increase the size of your bullets for a limited amount of time.
+- [nah] more if time
