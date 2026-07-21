@@ -1,47 +1,28 @@
-# Game1377 Exercise 5: Asteroids Part 3
+# Game1377 Exercise 5: Asteroids Part 4
 
-**New Classes in this Part:**
 
-- [GameManager](Assets/Scripts/Exercise3_Asteroids/GameManager.cs) for handling game state
-- [ExtensionMethods](Assets/Scripts/Exercise3_Asteroids/ExtensionMethods.cs) for extending the unity Animation class (and maybe other stuff in the future. it's fun.) sure sure there's definitely a simpler way, but this way was fancy and cool.
-- [EngineAudio](Assets/Scripts/Exercise3_Asteroids/EngineAudio.cs) for separating constant engine thrust sound from OneShots
-- [Powerup](Assets/Scripts/Exercise3_Asteroids/Powerup.cs) for handling the Powerups count and enum
-- [PowerupSpawner](Assets/Scripts/Exercise3_Asteroids/PowerupSpawner.cs) for spawning powerups at an interval.
+**Feature checklist**
 
-**Feature checklist (everything done)**
+Objective:
 
-**Lives**
+Add menus, in game UI, score (using singleton), coroutines, and the ability to move between scenes,
 
-- [x] Add lives so the player can respawn once they die.
-- [x] They should respawn at the center (0,0,0) on the screen.
-- [x] They should be invincible for a few seconds to allow them to avoid asteroids.
-- [x] Add an animation
-- [x] Add sound effect for when the player dies.
 
-**Hyperspace**
+Requirements:
 
-- [x] Improve the Hyperspace method so the player will not spawn where they can potentially hit an asteroid.
-- [x] Add an animation for hyperspace
-- [x] Add sound effect for hyperspace.
-
-**Fire**
-
-- [x] Add an animation for bullet
-- [x] Add sound effect for the bullet firing.
-- [x] Add a cooldown to firing to prevent spamming the fire button.
-
-**Thrust**
-
-- [x] Add an animation for thrust
-- [x] Add sound effect for the ship moving forward.
-
-**Asteroid/Asteroid Spawner**
-
-- [x] Add an animation for explode
-- [x] Add sound effect for the asteroids exploding.
-
-**Power Ups**
-
-- [x] One power up should increase the number of lives you have.
-- [x] One power up should increase the spaceship movement and rotation speed for a limited amount of time.
-- [x] One power up should increase the size of your bullets for a limited amount of time.
+- [ ] Score
+- [ ] Asteroids should award points: 20 for large, 50 for medium. 100 for small.
+- [ ] Add a UI element that shows your current score
+- [ ] singleton
+- [ ] Lives
+- [ ] Add a UI element that shows the number of lives you have.
+- [ ] Main Menu
+- [ ] Add a main menu that includes Start Game, Settings, and Quit Game.
+- [ ] Add an SFX to the button clicks.
+- [ ] hiscore?
+- [ ] Pause Menu
+- [ ] Add a pause menu that includes Restart Game, Settings, Return to Main Menu, and Quit Game.
+- [ ] The settings menu should allow you to change the audio levels of Music and SFX
+- [ ] Add an SFX to the button clicks
+- [ ] Power Ups
+- [ ] Change your code so it uses coroutines to handle power ups (duration and spawning)
