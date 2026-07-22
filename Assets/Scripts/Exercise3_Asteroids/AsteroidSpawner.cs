@@ -88,14 +88,6 @@ public class AsteroidSpawner : MonoBehaviour
     /// <param name="size"></param>
     public void SpawnAsteroid(Vector3 position, Asteroid.AsteroidSize size)
     {
-        GameObject spawned = Instantiate(AsteroidPrefabs[(int)size], position, Quaternion.identity);
-        if (spawned.TryGetComponent<Asteroid>(out var spawnedAsteroid))
-        {
-            spawnedAsteroid.SetAsteroidSpawner(this);
-        }
-        else
-        {
-            Debug.LogError("Asteroid prefabs not set up correctly!");
-        }
+        Instantiate(AsteroidPrefabs[(int)size], position, Quaternion.identity);
     }
 }
