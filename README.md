@@ -10,12 +10,12 @@ Add menus, in game UI, score (using singleton), coroutines, and the ability to m
 
 Requirements:
 
-- [ ] Score
-- [ ] Asteroids should award points: 20 for large, 50 for medium. 100 for small.
-- [ ] Add a UI element that shows your current score
-- [ ] singleton
-- [ ] Lives
-- [ ] Add a UI element that shows the number of lives you have.
+- [x] Score
+- [x] Asteroids should award points: 20 for large, 50 for medium. 100 for small.
+- [x] Add a UI element that shows your current score
+- [x] game manager singleton
+- [x] Lives
+- [x] Add a UI element that shows the number of lives you have.
 - [ ] Main Menu
 - [ ] Add a main menu that includes Start Game, Settings, and Quit Game.
 - [ ] Add an SFX to the button clicks.
