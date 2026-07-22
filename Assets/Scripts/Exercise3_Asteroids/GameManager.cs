@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// when the player dies, update game state accordingly and then respawn after delay
+    /// When the player dies, update game state accordingly and then respawn after delay
     /// </summary>
     /// <param name="currentLocation"></param>
     public void OnPlayerDeath(Vector3 currentLocation)
@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// respawn in the center of the screen
+    /// Respawn the player in the center of the screen
     /// </summary>
     /// <param name="spawnLocation"></param>
     private void RespawnPlayer()
@@ -55,7 +55,6 @@ public class GameManager : MonoBehaviour
         GameObject player = Instantiate(PlayerPrefab, initialSpawnLocation, PlayerPrefab.transform.rotation);
         if (player.TryGetComponent<AsteroidsPlayerController>(out var controller))
         {
-            controller.SetGameManager(this);
             if (invincibleOnSpawn)
             {
                 controller.BecomeInvincible();
@@ -68,7 +67,7 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// give the player an extra life
+    /// Give the player an extra life
     /// </summary>
     public void AddLife()
     {
@@ -76,17 +75,27 @@ public class GameManager : MonoBehaviour
         UpdateLivesDisplay();
     }
 
+    /// <summary>
+    /// Score points and update UI
+    /// </summary>
+    /// <param name="scoreIn"></param>
     public void AddScore(int scoreIn)
     {
         score += scoreIn;
         UpdateScoreDisplay();
     }
 
+    /// <summary>
+    /// Update UI for Lives
+    /// </summary>
     private void UpdateLivesDisplay()
     {
         LivesText.text = $"Lives: {lives}";
     }
 
+    /// <summary>
+    /// Update UI for Score
+    /// </summary>
     private void UpdateScoreDisplay()
     {
         ScoreText.text = $"Score: {score}";

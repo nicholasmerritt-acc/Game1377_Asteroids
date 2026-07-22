@@ -37,7 +37,6 @@ public class Asteroid : MonoBehaviour
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator animator;
-    [SerializeField] private AsteroidSpawner asteroidSpawner;
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
@@ -86,14 +85,9 @@ public class Asteroid : MonoBehaviour
     /// <param name="childSize"></param>
     private void SpawnChildren(AsteroidSize childSize)
     {
-        if (asteroidSpawner == null)
-        {
-            Debug.LogError("No asteroid spawner found, child asteroids will not spawn.");
-            return;
-        }
         for (int i = 0; i < childrenToSpawn; i++)
         {
-            asteroidSpawner.SpawnAsteroid(transform.position, childSize);
+            AsteroidSpawner.Instance.SpawnAsteroid(transform.position, childSize);
         }
     }
 
@@ -122,10 +116,5 @@ public class Asteroid : MonoBehaviour
             Destroy(collision.gameObject);
             BreakAsteroid();
         }
-    }
-
-    public void SetAsteroidSpawner(AsteroidSpawner newSpawner)
-    {
-        asteroidSpawner = newSpawner;
     }
 }

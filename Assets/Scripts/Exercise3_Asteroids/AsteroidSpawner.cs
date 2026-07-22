@@ -19,9 +19,10 @@ using UnityEngine;
 
 public class AsteroidSpawner : MonoBehaviour
 {
+    public static AsteroidSpawner Instance;
+
     [Header("References")]
     public GameObject[] AsteroidPrefabs;
-    public GameManager gameManager;
 
     [Header("Properties")]
     [SerializeField] private int initialAsteroids = 5;
@@ -34,6 +35,11 @@ public class AsteroidSpawner : MonoBehaviour
     private float spawnXMin = 0f;
     private float spawnYMax = 0f;
     private float spawnYMin = 0f;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {

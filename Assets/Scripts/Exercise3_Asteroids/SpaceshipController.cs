@@ -31,7 +31,6 @@ public class AsteroidsPlayerController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private GameManager gameManager;
     [SerializeField] private Animator animator;
 
     [Header("Audio")]
@@ -141,7 +140,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Create a bullet at our fire point and orient it correctly. The bullet itself should handle its own movement.
+    /// Create a bullet at our fire point and orient and size it correctly. The bullet itself should handle its own movement.
     /// </summary>
     private void FireBullet()
     {
@@ -198,13 +197,8 @@ public class AsteroidsPlayerController : MonoBehaviour
         animator.SetTrigger("TeleportEnd");
     }
 
-    public void SetGameManager(GameManager manager)
-    {
-        gameManager = manager;
-    }
-
     /// <summary>
-    /// make the player invincible, for a short duration
+    /// Make the player invincible, for a short duration
     /// </summary>
     public void BecomeInvincible()
     {
@@ -213,7 +207,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// will the player ignore impact with an asteroid?
+    /// Will the player ignore impact with an asteroid?
     /// </summary>
     /// <returns></returns>
     public bool IsInvincible()
@@ -222,7 +216,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// make the player vincible again
+    /// Make the player vincible again
     /// </summary>
     private void BecomeNotInvincible()
     {
@@ -230,7 +224,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// play animation of the player dying, then cleanup
+    /// Play animation of the player dying, then cleanup
     /// </summary>
     public void Die()
     {
@@ -241,11 +235,11 @@ public class AsteroidsPlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// after the spaceship dies, we need to wait for animation to finish before destroying object and spawning new one
+    /// After the spaceship dies, we need to wait for animation to finish before destroying object and spawning new one
     /// </summary>
     private void DoDeathCleanup()
     {
-        gameManager.OnPlayerDeath(transform.position);
+        GameManager.Instance.OnPlayerDeath(transform.position);
         Destroy(gameObject);
     }
 
@@ -273,7 +267,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Player has picked up a powerup. activate the corresponding ability
+    /// Player has picked up a powerup, so activate the corresponding ability
     /// </summary>
     /// <param name="which"></param>
     private void HandlePowerup(Powerup.PowerupType which)
@@ -284,7 +278,7 @@ public class AsteroidsPlayerController : MonoBehaviour
                 PowerupRocket();
                 break;
             case Powerup.PowerupType.Life:
-                gameManager.AddLife();
+                GameManager.Instance.AddLife();
                 break;
             case Powerup.PowerupType.Move:
                 PowerupMove();
@@ -293,7 +287,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// apply powerup that increases rotation speed and movement speed for a limited time
+    /// Apply powerup that increases rotation speed and movement speed for a limited time
     /// </summary>
     private void PowerupMove()
     {
@@ -303,7 +297,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// reset movement speed and rotation to normal
+    /// Reset movement speed and rotation to normal
     /// </summary>
     private void PowerupMoveReset()
     {
@@ -312,7 +306,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// apply powerup which increases bullet size for a limited time
+    /// Apply powerup which increases bullet size for a limited time
     /// </summary>
     private void PowerupRocket()
     {
@@ -321,7 +315,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// reset bullet size to normal
+    /// Reset bullet size to normal
     /// </summary>
     private void PowerupRocketReset()
     {
