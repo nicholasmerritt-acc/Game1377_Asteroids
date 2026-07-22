@@ -19,7 +19,7 @@ using UnityEngine;
 
 public class AsteroidSpawner : MonoBehaviour
 {
-    public static AsteroidSpawner Instance;
+    public static AsteroidSpawner Instance { get; private set; }
 
     [Header("References")]
     public GameObject[] AsteroidPrefabs;
@@ -38,7 +38,14 @@ public class AsteroidSpawner : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     void Start()

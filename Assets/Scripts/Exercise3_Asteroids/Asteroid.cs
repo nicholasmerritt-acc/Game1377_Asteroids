@@ -40,7 +40,6 @@ public class Asteroid : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip asteroidExplodeAudio;
 
     void Start()
     {
@@ -75,7 +74,7 @@ public class Asteroid : MonoBehaviour
 
         //play explode animation and then destroy after animating is over
         animator.SetTrigger("AsteroidExplode");
-        audioSource.PlayOneShot(asteroidExplodeAudio);
+        AudioManager.Instance.PlayAsteroidExplodeClip();
         Destroy(gameObject, animator.GetCurrentClipLength());
     }
 

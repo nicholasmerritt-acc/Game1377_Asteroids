@@ -18,8 +18,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Bullet : MonoBehaviour
 {
-    public AudioClip BulletSound;
-
     [SerializeField] private float bulletSpeed = 20f;
     [SerializeField] private float bulletLifetime = 5f;
 
@@ -29,7 +27,7 @@ public class Bullet : MonoBehaviour
         rb.AddRelativeForce(Vector2.up * bulletSpeed, ForceMode2D.Impulse);
         
         AudioSource audioSource = GetComponent<AudioSource>();
-        audioSource.PlayOneShot(BulletSound);
+        AudioManager.Instance.PlayBulletClip();
 
         Destroy(gameObject, bulletLifetime);
     }

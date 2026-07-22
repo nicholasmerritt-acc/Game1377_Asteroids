@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuButtons : MonoBehaviour
 {
+    public GameObject SettingsPanel;
+
     /// <summary>
     /// Start a new game of Asteroids
     /// </summary>
@@ -16,7 +18,7 @@ public class MainMenuButtons : MonoBehaviour
     /// </summary>
     public void SettingsClick()
     {
-
+        SettingsPanel.SetActive(true);
     }
 
     /// <summary>

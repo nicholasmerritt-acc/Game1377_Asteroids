@@ -33,12 +33,6 @@ public class AsteroidsPlayerController : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator animator;
 
-    [Header("Audio")]
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip spaceshipDeathAudio;
-    [SerializeField] private AudioClip spaceshipTeleportAudio;
-    [SerializeField] private EngineAudio engineAudio;
-
     [Header("Firing")]
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject bulletPrefab;
@@ -76,7 +70,6 @@ public class AsteroidsPlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -115,12 +108,12 @@ public class AsteroidsPlayerController : MonoBehaviour
         {
             rb.AddRelativeForce(Vector2.up * (thrustForce * thrustInput * Time.deltaTime), ForceMode2D.Impulse);
             animator.SetBool("Thrusting", true);
-            engineAudio.Play();
+            AudioManager.Instance.PlayEngineAudio();
         }
         else
         {
             animator.SetBool("Thrusting", false);
-            engineAudio.Pause();
+            AudioManager.Instance.PauseEngineAudio();
         }
     }
 
@@ -184,7 +177,7 @@ public class AsteroidsPlayerController : MonoBehaviour
 
         // Begin playing the first half of the teleport animation.
         animator.SetTrigger("TeleportBegin");
-        audioSource.PlayOneShot(spaceshipTeleportAudio);
+        AudioManager.Instance.PlaySpaceshipTeleportClip();
         Invoke(nameof(FinishTeleporting), animator.GetCurrentClipLength());
     }
 
@@ -230,7 +223,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     {
         destructionInProgress = true;
         animator.SetTrigger("SpaceshipDied");
-        audioSource.PlayOneShot(spaceshipDeathAudio);
+        AudioManager.Instance.PlaySpaceshipExplodeAudio();
         Invoke(nameof(DoDeathCleanup), animator.GetCurrentClipLength());
     }
 
