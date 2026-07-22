@@ -21,6 +21,7 @@ using UnityEngine;
 public class Asteroid : MonoBehaviour
 {
     public enum AsteroidSize { Small, Medium, Large }
+    public int Score = 20;
 
     [SerializeField] private AsteroidSize size;
     [SerializeField] private int childrenToSpawn = 2;
@@ -117,6 +118,7 @@ public class Asteroid : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Bullet"))
         {
+            GameManager.Instance.AddScore(Score);
             Destroy(collision.gameObject);
             BreakAsteroid();
         }

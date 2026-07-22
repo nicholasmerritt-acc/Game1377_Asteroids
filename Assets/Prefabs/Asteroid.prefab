@@ -172,6 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3991368aa3679fa439a63438f682fbbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Asteroid
+  Score: 50
   size: 1
   childrenToSpawn: 2
   destructionInProgress: 0

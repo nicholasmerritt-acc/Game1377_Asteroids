@@ -1,0 +1,4 @@
+b4 turnin
+reset all static in start or awake
+summary comments
+public camelcase

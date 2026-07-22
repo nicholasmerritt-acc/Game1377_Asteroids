@@ -1,19 +1,34 @@
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
+
     [Header("References")]
     public GameObject PlayerPrefab;
-    public AsteroidSpawner asteroidSpawner;
+    public AsteroidSpawner AsteroidSpawner;
+    public TMP_Text ScoreText;
+    public TMP_Text LivesText;
+
+    [Header("Player Stats")]
+    [SerializeField] private int lives = 3;
+    [SerializeField] private int score = 0;
 
     [Header("Respawning")]
-    [SerializeField] private int lives = 3;
     [SerializeField] private Vector3 initialSpawnLocation = Vector3.zero;
     [SerializeField] private bool invincibleOnSpawn = false;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
         RespawnPlayer();
+        UpdateLivesDisplay();
+        UpdateScoreDisplay();
         invincibleOnSpawn = true;
     }
 
@@ -23,9 +38,10 @@ public class GameManager : MonoBehaviour
     /// <param name="currentLocation"></param>
     public void OnPlayerDeath(Vector3 currentLocation)
     {
-        if (lives > 0)
+        lives--;
+        UpdateLivesDisplay();
+        if (lives >= 0)
         {
-            lives--;
             RespawnPlayer();
         }
     }
@@ -57,5 +73,22 @@ public class GameManager : MonoBehaviour
     public void AddLife()
     {
         lives++;
+        UpdateLivesDisplay();
+    }
+
+    public void AddScore(int scoreIn)
+    {
+        score += scoreIn;
+        UpdateScoreDisplay();
+    }
+
+    private void UpdateLivesDisplay()
+    {
+        LivesText.text = $"Lives: {lives}";
+    }
+
+    private void UpdateScoreDisplay()
+    {
+        ScoreText.text = $"Score: {score}";
     }
 }
