@@ -48,12 +48,6 @@ public class AudioManager : MonoBehaviour
         MusicSource.Play();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void PlayAsteroidExplodeClip()
     {
         SfxSource.PlayOneShot(asteroidExplodeClip);
