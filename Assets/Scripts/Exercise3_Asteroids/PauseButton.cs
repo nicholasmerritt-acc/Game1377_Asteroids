@@ -3,9 +3,9 @@ using UnityEngine;
 public class PauseButton : MonoBehaviour
 {
     public GameObject PauseMenu;
+    public GameObject SettingsPanel;
     public bool IsPaused = false;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         IsPaused = false;
@@ -19,9 +19,16 @@ public class PauseButton : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Switch the pause menu on and off, and make sure settings panel is disabled if we are unpaused just in case.
+    /// </summary>
     public void TogglePauseMenu()
     {
         IsPaused = !IsPaused;
         PauseMenu.SetActive(IsPaused);
+        if (!IsPaused)
+        {
+            SettingsPanel.SetActive(false);
+        }
     }
 }

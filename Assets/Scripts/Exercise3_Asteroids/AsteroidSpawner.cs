@@ -16,6 +16,7 @@
 *       Hint: Vector3.Distance can tell you how far one point is away from another. 
 */
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AsteroidSpawner : MonoBehaviour
 {
@@ -56,7 +57,24 @@ public class AsteroidSpawner : MonoBehaviour
         spawnXMin = -screenHalfWidth - initialPlayerSafeDistance;
         spawnYMax = screenHalfHeight + initialPlayerSafeDistance;
         spawnYMin = -screenHalfHeight - initialPlayerSafeDistance;
-        SpawnInitialAsteroids();
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == GameManager.GAME_SCENE_NAME)
+        {
+            SpawnInitialAsteroids();
+        }
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     /// <summary>

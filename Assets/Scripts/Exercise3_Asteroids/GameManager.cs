@@ -1,9 +1,11 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public const string GAME_SCENE_NAME = "AsteroidsGame";
 
     [Header("References")]
     public GameObject PlayerPrefab;
@@ -12,7 +14,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Player Stats")]
     [SerializeField] private int lives = 3;
+    [SerializeField] private int initialLives = 3;
     [SerializeField] private int score = 0;
+    [SerializeField] private int initialScore = 0;
 
     [Header("Respawning")]
     [SerializeField] private Vector3 initialSpawnLocation = Vector3.zero;
@@ -30,8 +34,29 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    void Start()
+    private void OnEnable()
     {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == GAME_SCENE_NAME)
+        {
+            InitializeGame();
+        }
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void InitializeGame()
+    {
+        Debug.Log("Gamemanager init...");
+        lives = initialLives;
+        score = initialScore;
         RespawnPlayer();
         UpdateLivesDisplay();
         UpdateScoreDisplay();
@@ -96,6 +121,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void UpdateLivesDisplay()
     {
+        if (LivesText == null)
+        {
+            return;
+        }
         LivesText.text = $"Lives: {lives}";
     }
 
@@ -104,6 +133,22 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void UpdateScoreDisplay()
     {
+        if (ScoreText == null)
+        {
+            return;
+        }
         ScoreText.text = $"Score: {score}";
+    }
+
+    public void SetScoreText(TMP_Text scoreTextIn)
+    {
+        ScoreText = scoreTextIn;
+        UpdateScoreDisplay();
+    }
+
+    public void SetLivesText(TMP_Text livesTextIn)
+    {
+        LivesText = livesTextIn;
+        UpdateLivesDisplay();
     }
 }

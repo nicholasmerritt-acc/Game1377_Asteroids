@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class PauseMenuButtons : MonoBehaviour
 {
     public GameObject SettingsPanel;
+    public GameObject PausePanel;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -38,5 +39,10 @@ public class PauseMenuButtons : MonoBehaviour
     public void QuitGameOnClick()
     {
         UnityEditor.EditorApplication.isPlaying = false;
+    }
+
+    public void ReturnToGameOnClick()
+    {
+        PausePanel.SetActive(false);
     }
 }
