@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
 
     [Header("References")]
     public GameObject PlayerPrefab;
-    public AsteroidSpawner AsteroidSpawner;
     public TMP_Text ScoreText;
     public TMP_Text LivesText;
 

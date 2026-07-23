@@ -3,20 +3,25 @@ using UnityEngine;
 public class PauseButton : MonoBehaviour
 {
     public GameObject PauseMenu;
+    public bool IsPaused = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        IsPaused = false;
     }
 
-    public void PauseButtonEnable()
+    private void Update()
     {
-        PauseMenu.SetActive(true);
+        if (Input.GetButtonDown("PauseButton"))
+        {
+            TogglePauseMenu();
+        }
     }
 
-    public void PauseButtonDisable()
+    public void TogglePauseMenu()
     {
-        PauseMenu.SetActive(false);
+        IsPaused = !IsPaused;
+        PauseMenu.SetActive(IsPaused);
     }
 }
