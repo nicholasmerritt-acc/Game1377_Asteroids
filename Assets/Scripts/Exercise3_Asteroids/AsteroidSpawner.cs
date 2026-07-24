@@ -16,7 +16,6 @@
 *       Hint: Vector3.Distance can tell you how far one point is away from another. 
 */
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class AsteroidSpawner : MonoBehaviour
 {
@@ -47,10 +46,7 @@ public class AsteroidSpawner : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-    }
 
-    void Start()
-    {
         float screenHalfHeight = Camera.main.orthographicSize;
         float screenHalfWidth = Camera.main.aspect * screenHalfHeight;
         spawnXMax = screenHalfWidth + initialPlayerSafeDistance;
@@ -59,28 +55,14 @@ public class AsteroidSpawner : MonoBehaviour
         spawnYMin = -screenHalfHeight - initialPlayerSafeDistance;
     }
 
-    private void OnEnable()
+    void Start()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == GameManager.GAME_SCENE_NAME)
-        {
-            SpawnInitialAsteroids();
-        }
-    }
-
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     /// <summary>
     /// Spawn initial asteroids at random positions. Ensure that they do not spawn where the player is located.
     /// </summary>
-    private void SpawnInitialAsteroids()
+    public void SpawnInitialAsteroids()
     {
         Vector3 playerLocation = Vector3.zero;
         for (int i = 0; i < initialAsteroids; i++)

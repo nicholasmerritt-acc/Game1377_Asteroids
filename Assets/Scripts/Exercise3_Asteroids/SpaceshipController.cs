@@ -27,12 +27,12 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(AudioSource))]
 public class AsteroidsPlayerController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator animator;
+    private InputSystem_Actions inputActions;
 
     [Header("Firing")]
     [SerializeField] private Transform firePoint;
@@ -67,6 +67,29 @@ public class AsteroidsPlayerController : MonoBehaviour
     [SerializeField] private bool invincible = false;
     [SerializeField] private bool destructionInProgress = false;
 
+    private void Awake()
+    {
+        inputActions = new InputSystem_Actions();
+    }
+
+    private void OnEnable()
+    {
+        inputActions.Player.Enable();
+        inputActions.Player.Move.performed += OnMove;
+        inputActions.Player.Move.canceled += OnMove;
+        inputActions.Player.Hyperspace.performed += OnHyperspace;
+        inputActions.Player.Attack.performed += OnAttack;
+    }
+
+    private void OnDisable()
+    {
+        inputActions.Player.Move.performed -= OnMove;
+        inputActions.Player.Move.canceled -= OnMove;
+        inputActions.Player.Hyperspace.performed -= OnHyperspace;
+        inputActions.Player.Attack.performed -= OnAttack;
+        inputActions.Player.Disable();
+    }
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -75,23 +98,26 @@ public class AsteroidsPlayerController : MonoBehaviour
 
     void Update()
     {
-        HandleInput();
+        //HandleInput();
         HandleRotation();
-        HandleFire();
+        //HandleFire();
     }
 
-    public void OnHyperspace(InputValue value)
+    public void OnHyperspace(InputAction.CallbackContext context)
     {
-        if (value.isPressed)
+        if (context.performed)
         {
             BeginTeleportToRandomLocation();
         }
     }
 
-    private void HandleInput()
+    public void OnMove(InputAction.CallbackContext context)
     {
-        rotationInput = Input.GetAxis("Horizontal");
-        thrustInput = Input.GetAxis("Vertical");
+        Vector2 moveInput = context.ReadValue<Vector2>();
+        Debug.Log(moveInput);
+
+        rotationInput = moveInput.x;
+        thrustInput = moveInput.y;
     }
 
     void FixedUpdate()
@@ -128,9 +154,9 @@ public class AsteroidsPlayerController : MonoBehaviour
     /// <summary>
     /// Handle input and timing related to firing bullets
     /// </summary>
-    private void HandleFire()
+    public void OnAttack(InputAction.CallbackContext context)
     {
-        if (Input.GetButtonDown("Fire"))
+        if (context.performed)
         {
             if (Time.time - lastFireTime > fireTimeout)
             {

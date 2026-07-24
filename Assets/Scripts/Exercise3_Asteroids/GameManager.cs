@@ -54,13 +54,13 @@ public class GameManager : MonoBehaviour
 
     private void InitializeGame()
     {
-        Debug.Log("Gamemanager init...");
         lives = initialLives;
         score = initialScore;
         RespawnPlayer();
         UpdateLivesDisplay();
         UpdateScoreDisplay();
         invincibleOnSpawn = true;
+        AsteroidSpawner.Instance.SpawnInitialAsteroids();
     }
 
     /// <summary>
