@@ -56,6 +56,7 @@ MonoBehaviour:
   asteroidExplodeClip: {fileID: 8300000, guid: f5c1b4d96ac41484ab20d5863eee77e2, type: 3}
   bulletClip: {fileID: 8300000, guid: 8d59d16b21cb0144181d07187541f775, type: 3}
   spaceshipTeleportClip: {fileID: 8300000, guid: 656e319a6f0c39d42ab4d75ff0c53018, type: 3}
+  buttonPressClip: {fileID: 8300000, guid: 27e136badba93b549ab7322e5222684a, type: 3}
 --- !u!82 &5623231001484964851
 AudioSource:
   m_ObjectHideFlags: 0

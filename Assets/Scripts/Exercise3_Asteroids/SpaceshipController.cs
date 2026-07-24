@@ -247,7 +247,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     {
         destructionInProgress = true;
         animator.SetTrigger("SpaceshipDied");
-        AudioManager.Instance.PlaySpaceshipExplodeAudio();
+        AudioManager.Instance.PlaySpaceshipExplodeClip();
         Invoke(nameof(DoDeathCleanup), animator.GetCurrentClipLength());
     }
 

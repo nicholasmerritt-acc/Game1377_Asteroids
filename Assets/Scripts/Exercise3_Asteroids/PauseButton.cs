@@ -1,33 +1,50 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PauseButton : MonoBehaviour
 {
     public GameObject PauseMenu;
     public GameObject SettingsPanel;
-    public bool IsPaused = false;
 
-    void Start()
+    private InputSystem_Actions inputActions;
+
+    private void Awake()
     {
-        IsPaused = false;
+        inputActions = new InputSystem_Actions();
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if (Input.GetButtonDown("PauseButton"))
-        {
-            TogglePauseMenu();
-        }
+        inputActions.Player.Enable();
+        inputActions.Player.Pause.performed += OnPause;
+    }
+
+    private void OnDisable()
+    {
+        inputActions.Player.Pause.performed -= OnPause;
+        inputActions.Player.Disable();
+    }
+
+    private void OnPause(InputAction.CallbackContext context)
+    {
+        TogglePauseMenu();
+    }
+
+    public void OnPauseButtonClick()
+    {
+        AudioManager.Instance.PlayButtonPressClip();
+        TogglePauseMenu();
     }
 
     /// <summary>
-    /// Switch the pause menu on and off, and make sure settings panel is disabled if we are unpaused just in case.
+    /// Pause or unpause the game. Make sure all panels are disabled if we are unpaused.
     /// </summary>
     public void TogglePauseMenu()
     {
-        IsPaused = !IsPaused;
-        PauseMenu.SetActive(IsPaused);
-        if (!IsPaused)
-        {
+        bool isNowPaused = GameManager.Instance.TogglePause();
+        PauseMenu.SetActive(isNowPaused);
+
+        if (!isNowPaused)
             SettingsPanel.SetActive(false);
         }
     }

@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
@@ -18,6 +16,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip asteroidExplodeClip;
     [SerializeField] private AudioClip bulletClip;
     [SerializeField] private AudioClip spaceshipTeleportClip;
+    [SerializeField] private AudioClip buttonPressClip;
 
     private void Awake()
     {
@@ -76,8 +75,13 @@ public class AudioManager : MonoBehaviour
         SfxSource.PlayOneShot(spaceshipTeleportClip);
     }
 
-    public void PlaySpaceshipExplodeAudio()
+    public void PlaySpaceshipExplodeClip()
     {
         SfxSource.PlayOneShot(spaceshipExplodeClip);
+    }
+
+    public void PlayButtonPressClip()
+    {
+        SfxSource.PlayOneShot(buttonPressClip);
     }
 }

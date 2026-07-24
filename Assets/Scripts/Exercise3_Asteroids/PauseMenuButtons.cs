@@ -5,31 +5,33 @@ public class PauseMenuButtons : MonoBehaviour
 {
     public GameObject SettingsPanel;
     public GameObject PausePanel;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public AudioManager AudioManager {
+        set;
+        get
+        {
+            if (field == null)
+            {
+                field = AudioManager.Instance;
+            }
+            return field;
+        }
     }
 
     public void RestartGameOnClick()
     {
+        AudioManager.PlayButtonPressClip();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void ActivateSettingsPanel()
     {
+        AudioManager.PlayButtonPressClip();
         SettingsPanel.SetActive(true);
     }
 
     public void MainMenuOnClick()
     {
+        AudioManager.PlayButtonPressClip();
         SceneManager.LoadScene("MainMenu");
     }
 
@@ -38,11 +40,14 @@ public class PauseMenuButtons : MonoBehaviour
     /// </summary>
     public void QuitGameOnClick()
     {
+        AudioManager.PlayButtonPressClip();
         UnityEditor.EditorApplication.isPlaying = false;
     }
 
     public void ReturnToGameOnClick()
     {
+        AudioManager.PlayButtonPressClip();
+        GameManager.Instance.TogglePause();
         PausePanel.SetActive(false);
     }
 }

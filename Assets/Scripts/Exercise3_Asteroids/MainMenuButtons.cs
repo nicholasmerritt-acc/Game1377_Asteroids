@@ -10,6 +10,7 @@ public class MainMenuButtons : MonoBehaviour
     /// </summary>
     public void StartGameClick()
     {
+        AudioManager.Instance.PlayButtonPressClip();
         SceneManager.LoadScene("AsteroidsGame");
     }
 
@@ -18,6 +19,7 @@ public class MainMenuButtons : MonoBehaviour
     /// </summary>
     public void SettingsClick()
     {
+        AudioManager.Instance.PlayButtonPressClip();
         SettingsPanel.SetActive(true);
     }
 
@@ -26,6 +28,7 @@ public class MainMenuButtons : MonoBehaviour
     /// </summary>
     public void QuitGameClick()
     {
+        AudioManager.Instance.PlayButtonPressClip();
         UnityEditor.EditorApplication.isPlaying = false;
     }
 }

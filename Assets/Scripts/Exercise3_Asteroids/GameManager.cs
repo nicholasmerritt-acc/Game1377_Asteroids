@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Vector3 initialSpawnLocation = Vector3.zero;
     [SerializeField] private bool invincibleOnSpawn = false;
 
+    [Header("Pausing")]
+    public bool GameIsPaused = false;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -52,15 +55,29 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
+    /// <summary>
+    /// Setup a new game of Asteroids.
+    /// </summary>
     private void InitializeGame()
     {
-        lives = initialLives;
-        score = initialScore;
+        ResetInitialVariables();
         RespawnPlayer();
         UpdateLivesDisplay();
         UpdateScoreDisplay();
-        invincibleOnSpawn = true;
         AsteroidSpawner.Instance.SpawnInitialAsteroids();
+    }
+
+    /// <summary>
+    /// Set all game state variables to their initial value, i.e. how they should be at the beginning of a new game.
+    /// </summary>
+    private void ResetInitialVariables()
+    {
+        Time.timeScale = 1.0f;
+        lives = initialLives;
+        score = initialScore;
+
+        //make every respawn after the first one grant invincibility
+        invincibleOnSpawn = true;
     }
 
     /// <summary>
@@ -150,5 +167,21 @@ public class GameManager : MonoBehaviour
     {
         LivesText = livesTextIn;
         UpdateLivesDisplay();
+    }
+
+    public bool TogglePause()
+    {
+        GameIsPaused = !GameIsPaused;
+
+        if (GameIsPaused)
+        {
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
+
+        return GameIsPaused;
     }
 }
