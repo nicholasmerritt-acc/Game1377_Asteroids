@@ -23,6 +23,7 @@
  */
 
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
@@ -77,7 +78,14 @@ public class AsteroidsPlayerController : MonoBehaviour
         HandleInput();
         HandleRotation();
         HandleFire();
-        HandleHyperspace();
+    }
+
+    public void OnHyperspace(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            BeginTeleportToRandomLocation();
+        }
     }
 
     private void HandleInput()
@@ -146,16 +154,6 @@ public class AsteroidsPlayerController : MonoBehaviour
         bulletObject.transform.localScale = Vector3.one * bulletSize;
     }
 
-    /// <summary>
-    /// Handle input related to hyperspace-jumping
-    /// </summary>
-    private void HandleHyperspace()
-    {
-        if (Input.GetButtonDown("Hyperspace"))
-        {
-            BeginTeleportToRandomLocation();
-        }
-    }
 
     /// <summary>
     /// Staying within screen bounds, instantly transport the ship to a random safe location, with no asteroids within asteroidSafeDistance.
