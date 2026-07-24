@@ -44,7 +44,7 @@ public class PauseButton : MonoBehaviour
         bool isNowPaused = GameManager.Instance.TogglePause();
         PauseMenu.SetActive(isNowPaused);
 
-        if (!isNowPaused)
+        if (!isNowPaused) {
             SettingsPanel.SetActive(false);
         }
     }

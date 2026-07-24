@@ -5,33 +5,39 @@ public class PauseMenuButtons : MonoBehaviour
 {
     public GameObject SettingsPanel;
     public GameObject PausePanel;
-    public AudioManager AudioManager {
-        set;
+
+    private AudioManager audioManager;
+
+    public AudioManager AudioManagerInstance {
+        set
+        {
+            audioManager = value;
+        }
         get
         {
-            if (field == null)
+            if (audioManager == null)
             {
-                field = AudioManager.Instance;
+                audioManager = AudioManager.Instance;
             }
-            return field;
+            return audioManager;
         }
     }
 
     public void RestartGameOnClick()
     {
-        AudioManager.PlayButtonPressClip();
+        AudioManagerInstance.PlayButtonPressClip();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void ActivateSettingsPanel()
     {
-        AudioManager.PlayButtonPressClip();
+        AudioManagerInstance.PlayButtonPressClip();
         SettingsPanel.SetActive(true);
     }
 
     public void MainMenuOnClick()
     {
-        AudioManager.PlayButtonPressClip();
+        AudioManagerInstance.PlayButtonPressClip();
         SceneManager.LoadScene("MainMenu");
     }
 
@@ -40,13 +46,13 @@ public class PauseMenuButtons : MonoBehaviour
     /// </summary>
     public void QuitGameOnClick()
     {
-        AudioManager.PlayButtonPressClip();
+        AudioManagerInstance.PlayButtonPressClip();
         UnityEditor.EditorApplication.isPlaying = false;
     }
 
     public void ReturnToGameOnClick()
     {
-        AudioManager.PlayButtonPressClip();
+        AudioManagerInstance.PlayButtonPressClip();
         GameManager.Instance.TogglePause();
         PausePanel.SetActive(false);
     }

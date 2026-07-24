@@ -32,8 +32,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 7604875201860677608}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -110,9 +110,9 @@ RectTransform:
   - {fileID: 4357088027139575178}
   m_Father: {fileID: 6754505536335854244}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -180}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8610943201563648748
@@ -190,7 +190,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59b7f0741a7e6154aa84a7f9ffa6ff4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SettingsUIOptions
-  SettingsPanel: {fileID: 0}
 --- !u!1 &930999245957617299
 GameObject:
   m_ObjectHideFlags: 0
@@ -490,7 +489,7 @@ GameObject:
   - component: {fileID: 1617349331715804439}
   - component: {fileID: 3360542565473314800}
   - component: {fileID: 1306185679244766674}
-  - component: {fileID: 6403720592085244799}
+  - component: {fileID: 7670500041301262389}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -513,9 +512,9 @@ RectTransform:
   - {fileID: 6472791199239275179}
   m_Father: {fileID: 6754505536335854244}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -205}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1617349331715804439
@@ -600,9 +599,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6403720592085244799}
-        m_TargetAssemblyTypeName: SettingsBackButton, Assembly-CSharp
-        m_MethodName: DeactivateSettingsPanel
+      - m_Target: {fileID: 7670500041301262389}
+        m_TargetAssemblyTypeName: PanelBackButton, Assembly-CSharp
+        m_MethodName: BackButtonOnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -612,7 +611,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &6403720592085244799
+--- !u!114 &7670500041301262389
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -621,10 +620,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3026360266338614006}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59b7f0741a7e6154aa84a7f9ffa6ff4e, type: 3}
+  m_Script: {fileID: 11500000, guid: e688d16e742f01b4992e98b269ce8692, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  SettingsPanel: {fileID: 5835155309167706248}
+  PanelToDeactivate: {fileID: 5835155309167706248}
 --- !u!1 &3074088449977781010
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,9 +793,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6754505536335854244}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -25}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9153311826910692671
@@ -932,7 +931,7 @@ RectTransform:
   m_Father: {fileID: 5653116080125263264}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1160,9 +1159,9 @@ RectTransform:
   - {fileID: 7604875201860677608}
   m_Father: {fileID: 6754505536335854244}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -110}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3861214791187212044
@@ -1240,7 +1239,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59b7f0741a7e6154aa84a7f9ffa6ff4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SettingsUIOptions
-  SettingsPanel: {fileID: 0}
 --- !u!1 &6449100349120558516
 GameObject:
   m_ObjectHideFlags: 0
@@ -1273,9 +1271,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6754505536335854244}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7168645976282344518
@@ -1410,8 +1408,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 4357088027139575178}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1486,7 +1484,7 @@ RectTransform:
   m_Father: {fileID: 6411426003417214780}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1560,9 +1558,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6754505536335854244}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -145}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &407091850265498064

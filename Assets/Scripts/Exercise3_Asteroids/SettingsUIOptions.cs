@@ -2,20 +2,6 @@ using UnityEngine;
 
 public class SettingsUIOptions : MonoBehaviour
 {
-    public GameObject SettingsPanel;
-
-    public void DeactivateSettingsPanel()
-    {
-        SettingsPanel.SetActive(false);
-    }
-
-    private void Update()
-    {
-        if (Input.GetButtonDown("Cancel"))
-        {
-            DeactivateSettingsPanel();
-        }
-    }
 
     public void SetMusicVolume(float amount)
     {

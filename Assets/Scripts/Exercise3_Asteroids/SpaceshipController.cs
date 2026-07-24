@@ -98,24 +98,17 @@ public class AsteroidsPlayerController : MonoBehaviour
 
     void Update()
     {
-        //HandleInput();
         HandleRotation();
-        //HandleFire();
     }
 
     public void OnHyperspace(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            BeginTeleportToRandomLocation();
-        }
+        BeginTeleportToRandomLocation();
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
         Vector2 moveInput = context.ReadValue<Vector2>();
-        Debug.Log(moveInput);
-
         rotationInput = moveInput.x;
         thrustInput = moveInput.y;
     }
