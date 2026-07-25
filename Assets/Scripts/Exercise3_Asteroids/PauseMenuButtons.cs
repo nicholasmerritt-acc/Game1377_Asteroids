@@ -41,14 +41,4 @@ public class PauseMenuButtons : MonoBehaviour
         audioManager.PlayButtonPressClip();
         UnityEditor.EditorApplication.isPlaying = false;
     }
-
-    /// <summary>
-    /// unpause the game and hide the pause menu
-    /// </summary>
-    public void ReturnToGameOnClick()
-    {
-        audioManager.PlayButtonPressClip();
-        GameManager.Instance.TogglePause();
-        PausePanel.SetActive(false);
-    }
 }
