@@ -22,6 +22,7 @@
  
  */
 
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -96,6 +97,8 @@ public class AsteroidsPlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         audioManager = AudioManager.Instance;
+        thrustForce = initialThrustForce;
+        rotationSpeed = initialRotationSpeed;
     }
 
     void Update()
@@ -263,74 +266,40 @@ public class AsteroidsPlayerController : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("PowerupRocket"))
         {
-            HandlePowerup(Powerup.PowerupType.Rocket);
+            StartCoroutine(PowerupRocket());
             Destroy(collision.gameObject);
         }
         else if (collision.gameObject.CompareTag("PowerupLife"))
         {
-            HandlePowerup(Powerup.PowerupType.Life);
+            GameManager.Instance.AddLife();
             Destroy(collision.gameObject);
         }
         else if (collision.gameObject.CompareTag("PowerupMove"))
         {
-            HandlePowerup(Powerup.PowerupType.Move);
+            StartCoroutine(PowerupMove());
             Destroy(collision.gameObject);
-        }
-    }
-
-    /// <summary>
-    /// Player has picked up a powerup, so activate the corresponding ability
-    /// </summary>
-    /// <param name="which"></param>
-    private void HandlePowerup(Powerup.PowerupType which)
-    {
-        switch (which)
-        {
-            case Powerup.PowerupType.Rocket:
-                PowerupRocket();
-                break;
-            case Powerup.PowerupType.Life:
-                GameManager.Instance.AddLife();
-                break;
-            case Powerup.PowerupType.Move:
-                PowerupMove();
-                break;
         }
     }
 
     /// <summary>
     /// Apply powerup that increases rotation speed and movement speed for a limited time
     /// </summary>
-    private void PowerupMove()
+    private IEnumerator PowerupMove()
     {
         rotationSpeed += rotationSpeedIncrement;
         thrustForce += thrustForceIncrement;
-        Invoke(nameof(PowerupMoveReset), powerupTimeout);
-    }
-
-    /// <summary>
-    /// Reset movement speed and rotation to normal
-    /// </summary>
-    private void PowerupMoveReset()
-    {
-        rotationSpeed = initialRotationSpeed;
-        thrustForce = initialThrustForce;
+        yield return new WaitForSeconds(powerupTimeout);
+        rotationSpeed -= rotationSpeedIncrement;
+        thrustForce -= thrustForceIncrement;
     }
 
     /// <summary>
     /// Apply powerup which increases bullet size for a limited time
     /// </summary>
-    private void PowerupRocket()
+    private IEnumerator PowerupRocket()
     {
         bulletSize += bulletSizeIncrement;
-        Invoke(nameof(PowerupRocketReset), powerupTimeout);
-    }
-
-    /// <summary>
-    /// Reset bullet size to normal
-    /// </summary>
-    private void PowerupRocketReset()
-    {
+        yield return new WaitForSeconds(powerupTimeout);
         bulletSize = initialBulletSize;
     }
 }

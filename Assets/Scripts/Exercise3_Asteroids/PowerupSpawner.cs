@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PowerupSpawner : MonoBehaviour
@@ -9,18 +10,32 @@ public class PowerupSpawner : MonoBehaviour
 
     void Start()
     {
-        InvokeRepeating(nameof(SpawnPowerup), initialSpawnWaitTime, spawnRepeatInterval);
+        StartCoroutine(nameof(SpawnPowerup));
     }
 
     /// <summary>
-    /// create a powerup within the bounds of the screen
+    /// Coroutine that creates a powerup within the bounds of the screen
     /// </summary>
-    void SpawnPowerup()
+    IEnumerator SpawnPowerup()
     {
-        if (Powerup.Count < maxPowerups)
+        yield return new WaitForSeconds(initialSpawnWaitTime);
+        //while (GameManager.Instance.GameIsActive)
+        while (true)
         {
             Vector2 powerupPosition = new Vector2(Random.Range(ScreenBounds.ScreenLeft, ScreenBounds.ScreenRight), Random.Range(ScreenBounds.ScreenBottom, ScreenBounds.ScreenTop));
             Instantiate(PowerupPrefabs[Random.Range(0, PowerupPrefabs.Length)], powerupPosition, Quaternion.identity);
+
+            yield return new WaitUntil(PowerupsLessThanMax);
+            yield return new WaitForSeconds(spawnRepeatInterval);
         }
+    }
+
+    /// <summary>
+    /// Returns true if we have capacity to spawn another powerup
+    /// </summary>
+    /// <returns></returns>
+    private bool PowerupsLessThanMax()
+    {
+        return Powerup.Count < maxPowerups;
     }
 }
