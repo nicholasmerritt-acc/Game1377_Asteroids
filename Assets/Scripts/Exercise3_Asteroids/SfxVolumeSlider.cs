@@ -1,11 +1,12 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-public class SettingsUIOptions : MonoBehaviour
+public class SfxVolumeSlider : MonoBehaviour
 {
-
-    public void SetMusicVolume(float amount)
+    private void Start()
     {
-        AudioManager.Instance.MusicSource.volume = amount;
+        Slider slider = GetComponent<Slider>();
+        slider.value = AudioManager.Instance.SfxSource.volume;
     }
 
     public void SetSFXVolume(float amount)

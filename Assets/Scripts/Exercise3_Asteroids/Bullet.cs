@@ -25,10 +25,7 @@ public class Bullet : MonoBehaviour
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         rb.AddRelativeForce(Vector2.up * bulletSpeed, ForceMode2D.Impulse);
-        
-        AudioSource audioSource = GetComponent<AudioSource>();
         AudioManager.Instance.PlayBulletClip();
-
         Destroy(gameObject, bulletLifetime);
     }
 }

@@ -5,7 +5,6 @@ public class PauseButton : MonoBehaviour
 {
     public GameObject PauseMenu;
     public GameObject SettingsPanel;
-
     private InputSystem_Actions inputActions;
 
     private void Awake()

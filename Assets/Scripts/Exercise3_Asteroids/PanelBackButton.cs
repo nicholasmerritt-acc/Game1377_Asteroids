@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Button that allows you to escape out of a menu: a pause menu, a settings menu, etc
+/// </summary>
 public class PanelBackButton : MonoBehaviour
 {
     public GameObject PanelToDeactivate;

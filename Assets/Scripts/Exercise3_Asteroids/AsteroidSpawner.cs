@@ -55,10 +55,6 @@ public class AsteroidSpawner : MonoBehaviour
         spawnYMin = -screenHalfHeight - initialPlayerSafeDistance;
     }
 
-    void Start()
-    {
-    }
-
     /// <summary>
     /// Spawn initial asteroids at random positions. Ensure that they do not spawn where the player is located.
     /// </summary>

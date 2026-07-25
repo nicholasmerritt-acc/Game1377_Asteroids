@@ -5,54 +5,49 @@ public class PauseMenuButtons : MonoBehaviour
 {
     public GameObject SettingsPanel;
     public GameObject PausePanel;
-
     private AudioManager audioManager;
 
-    public AudioManager AudioManagerInstance {
-        set
-        {
-            audioManager = value;
-        }
-        get
-        {
-            if (audioManager == null)
-            {
-                audioManager = AudioManager.Instance;
-            }
-            return audioManager;
-        }
+    private void Start()
+    {
+        audioManager = AudioManager.Instance;
     }
 
     public void RestartGameOnClick()
     {
-        AudioManagerInstance.PlayButtonPressClip();
+        audioManager.PlayButtonPressClip();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void ActivateSettingsPanel()
+    public void SettingsButtonOnClick()
     {
-        AudioManagerInstance.PlayButtonPressClip();
+        audioManager.PlayButtonPressClip();
         SettingsPanel.SetActive(true);
     }
 
+    /// <summary>
+    /// Return to the main menu
+    /// </summary>
     public void MainMenuOnClick()
     {
-        AudioManagerInstance.PlayButtonPressClip();
+        audioManager.PlayButtonPressClip();
         SceneManager.LoadScene("MainMenu");
     }
 
     /// <summary>
-    /// Quit the game. Need to add alternate version if we ever want to build the game.
+    /// Quit the game. Need to add alternate version if we ever want to build the game, since this will only work in the Editor
     /// </summary>
     public void QuitGameOnClick()
     {
-        AudioManagerInstance.PlayButtonPressClip();
+        audioManager.PlayButtonPressClip();
         UnityEditor.EditorApplication.isPlaying = false;
     }
 
+    /// <summary>
+    /// unpause the game and hide the pause menu
+    /// </summary>
     public void ReturnToGameOnClick()
     {
-        AudioManagerInstance.PlayButtonPressClip();
+        audioManager.PlayButtonPressClip();
         GameManager.Instance.TogglePause();
         PausePanel.SetActive(false);
     }

@@ -17,7 +17,6 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(AudioSource))]
 public class Asteroid : MonoBehaviour
 {
     public enum AsteroidSize { Small, Medium, Large }
@@ -38,14 +37,10 @@ public class Asteroid : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator animator;
 
-    [Header("Audio")]
-    [SerializeField] private AudioSource audioSource;
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
 
         SetInitialVelocities();
     }

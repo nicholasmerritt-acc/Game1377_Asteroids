@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1.0f;
         lives = initialLives;
         score = initialScore;
+        GameIsPaused = false;
 
         //make every respawn after the first one grant invincibility
         invincibleOnSpawn = true;
@@ -169,6 +170,10 @@ public class GameManager : MonoBehaviour
         UpdateLivesDisplay();
     }
 
+    /// <summary>
+    /// Pause or Unpause the game, and then return the current pause state
+    /// </summary>
+    /// <returns></returns>
     public bool TogglePause()
     {
         GameIsPaused = !GameIsPaused;

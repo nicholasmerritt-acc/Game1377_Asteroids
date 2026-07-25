@@ -33,6 +33,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator animator;
     private InputSystem_Actions inputActions;
+    private AudioManager audioManager;
 
     [Header("Firing")]
     [SerializeField] private Transform firePoint;
@@ -94,6 +95,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        audioManager = AudioManager.Instance;
     }
 
     void Update()
@@ -135,12 +137,12 @@ public class AsteroidsPlayerController : MonoBehaviour
         {
             rb.AddRelativeForce(Vector2.up * (thrustForce * thrustInput * Time.deltaTime), ForceMode2D.Impulse);
             animator.SetBool("Thrusting", true);
-            AudioManager.Instance.PlayEngineAudio();
+            audioManager.PlayEngineAudio();
         }
         else
         {
             animator.SetBool("Thrusting", false);
-            AudioManager.Instance.PauseEngineAudio();
+            audioManager.PauseEngineAudio();
         }
     }
 
@@ -194,7 +196,7 @@ public class AsteroidsPlayerController : MonoBehaviour
 
         // Begin playing the first half of the teleport animation.
         animator.SetTrigger("TeleportBegin");
-        AudioManager.Instance.PlaySpaceshipTeleportClip();
+        audioManager.PlaySpaceshipTeleportClip();
         Invoke(nameof(FinishTeleporting), animator.GetCurrentClipLength());
     }
 
@@ -240,7 +242,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     {
         destructionInProgress = true;
         animator.SetTrigger("SpaceshipDied");
-        AudioManager.Instance.PlaySpaceshipExplodeClip();
+        audioManager.PlaySpaceshipExplodeClip();
         Invoke(nameof(DoDeathCleanup), animator.GetCurrentClipLength());
     }
 

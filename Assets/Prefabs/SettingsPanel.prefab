@@ -85,7 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3918433675648486991}
   - component: {fileID: 8610943201563648748}
-  - component: {fileID: 2886410217849795380}
+  - component: {fileID: 3514939902420476010}
   m_Layer: 5
   m_Name: SFXSlider
   m_TagString: Untagged
@@ -166,8 +166,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2886410217849795380}
-        m_TargetAssemblyTypeName: SettingsUIOptions, Assembly-CSharp
+      - m_Target: {fileID: 3514939902420476010}
+        m_TargetAssemblyTypeName: SfxVolumeSlider, Assembly-CSharp
         m_MethodName: SetSFXVolume
         m_Mode: 0
         m_Arguments:
@@ -178,7 +178,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2886410217849795380
+--- !u!114 &3514939902420476010
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -187,9 +187,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 906763774643764746}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59b7f0741a7e6154aa84a7f9ffa6ff4e, type: 3}
+  m_Script: {fileID: 11500000, guid: f747e2635bc15d04cafa168e54e20920, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SettingsUIOptions
+  m_EditorClassIdentifier: '::'
 --- !u!1 &930999245957617299
 GameObject:
   m_ObjectHideFlags: 0
