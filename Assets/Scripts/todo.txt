@@ -1,6 +1,0 @@
-b4 turnin
-reset all static in start or awake
-summary comments
-public camelcase
-save refs in start? less dot notating
-5 asteroids lol

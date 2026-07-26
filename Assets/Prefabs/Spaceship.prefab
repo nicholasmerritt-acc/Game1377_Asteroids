@@ -270,9 +270,9 @@ MonoBehaviour:
   initialBulletSize: 0.1
   bulletSize: 0.1
   bulletSizeIncrement: 0.2
-  initialThrustForce: 10
-  thrustForce: 10
-  thrustForceIncrement: 4
+  initialThrustForce: 7
+  thrustForce: 7
+  thrustForceIncrement: 6
   thrustInput: 0
   initialRotationSpeed: 200
   rotationSpeed: 200

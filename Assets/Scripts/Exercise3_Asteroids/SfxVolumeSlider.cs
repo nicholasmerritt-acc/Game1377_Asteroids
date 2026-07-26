@@ -6,6 +6,7 @@ public class SfxVolumeSlider : MonoBehaviour
     private void Start()
     {
         Slider slider = GetComponent<Slider>();
+        //set the value so we remember the volume setting between settings pages e.g. main menu vs in game
         slider.value = AudioManager.Instance.SfxSource.volume;
     }
 

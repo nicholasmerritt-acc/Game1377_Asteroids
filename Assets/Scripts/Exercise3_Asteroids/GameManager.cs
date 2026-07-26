@@ -143,7 +143,14 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
-        LivesText.text = $"Lives: {lives}";
+        if (lives >= 0)
+        {
+            LivesText.text = $"Lives: {lives}";
+        }
+        else
+        {
+            LivesText.text = "Game Over!";
+        }
     }
 
     /// <summary>
