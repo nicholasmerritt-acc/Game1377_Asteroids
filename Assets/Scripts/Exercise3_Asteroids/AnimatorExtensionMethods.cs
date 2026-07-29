@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public static class ExtensionMethods
+public static class AnimatorExtensionMethods
 {
     /// <summary>
     /// Get the length of the currently playing clip

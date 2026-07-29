@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,6 +10,8 @@ public class GameManager : MonoBehaviour
 
     [Header("References")]
     public GameObject PlayerPrefab;
+    public GameObject pcgo;
+    [SerializeField] private AsteroidsPlayerController playerController;
     public TMP_Text ScoreText;
     public TMP_Text LivesText;
 
@@ -21,6 +24,7 @@ public class GameManager : MonoBehaviour
     [Header("Respawning")]
     [SerializeField] private Vector3 initialSpawnLocation = Vector3.zero;
     [SerializeField] private bool invincibleOnSpawn = false;
+    [SerializeField] private float respawnDelay = 1.0f;
 
     [Header("Pausing")]
     public bool GameIsPaused = false;
@@ -55,11 +59,39 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
+    private void Start()
+    {
+        SetupReferences();
+    }
+
+    private void SetupReferences()
+    {
+        if (ScoreText == null)
+        {
+            ScoreText = FindAnyObjectByType<ScoreText>().GetComponent<TMP_Text>();
+        }
+        if (LivesText == null)
+        {
+            LivesText = FindAnyObjectByType<LivesText>().GetComponent<TMP_Text>();
+        }
+        if (playerController == null)
+        {
+            playerController = FindAnyObjectByType<AsteroidsPlayerController>();
+            if (playerController == null)
+            {
+                //only instantiate if we truly have no player. otherwise, use the existing player in the scene
+                playerController = Instantiate(PlayerPrefab, initialSpawnLocation, PlayerPrefab.transform.rotation).GetComponent<AsteroidsPlayerController>();
+            }
+            pcgo = playerController.gameObject;
+        }
+    }
+
     /// <summary>
     /// Setup a new game of Asteroids.
     /// </summary>
     private void InitializeGame()
     {
+        SetupReferences();
         ResetInitialVariables();
         RespawnPlayer();
         UpdateLivesDisplay();
@@ -85,14 +117,20 @@ public class GameManager : MonoBehaviour
     /// When the player dies, update game state accordingly and then respawn after delay
     /// </summary>
     /// <param name="currentLocation"></param>
-    public void OnPlayerDeath(Vector3 currentLocation)
+    public void OnPlayerDeath()
     {
         lives--;
         UpdateLivesDisplay();
         if (lives >= 0)
         {
-            RespawnPlayer();
+            StartCoroutine(nameof(RespawnAfterDelay));
         }
+    }
+
+    private IEnumerator RespawnAfterDelay()
+    {
+        yield return new WaitForSeconds(respawnDelay);
+        RespawnPlayer();
     }
 
     /// <summary>
@@ -101,17 +139,14 @@ public class GameManager : MonoBehaviour
     /// <param name="spawnLocation"></param>
     private void RespawnPlayer()
     {
-        GameObject player = Instantiate(PlayerPrefab, initialSpawnLocation, PlayerPrefab.transform.rotation);
-        if (player.TryGetComponent<AsteroidsPlayerController>(out var controller))
+        //pcgo.SetActive(true);
+
+
+        playerController = pcgo.GetComponent<AsteroidsPlayerController>();
+        playerController.OnRespawn();
+        if (invincibleOnSpawn)
         {
-            if (invincibleOnSpawn)
-            {
-                controller.BecomeInvincible();
-            }
-        }
-        else
-        {
-            Debug.LogError("Player prefab is missing Player Controller component!");
+            playerController.BecomeInvincible();
         }
     }
 

@@ -22,7 +22,6 @@
  
  */
 
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -41,37 +40,36 @@ public class AsteroidsPlayerController : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float lastFireTime;
     [SerializeField] private float fireTimeout = 1f;
+    public float BulletSize = .1f;
     [SerializeField] private float initialBulletSize = .1f;
-    [SerializeField] private float bulletSize = .1f;
-    [SerializeField] private float bulletSizeIncrement = .2f;
 
     [Header("Thrust")]
     [SerializeField] private float initialThrustForce = 10f;
-    [SerializeField] private float thrustForce = 10f;
-    [SerializeField] private float thrustForceIncrement = 4f;
+    public float ThrustForce = 10f;
     [SerializeField] private float thrustInput;
 
     [Header("Rotation")]
     [SerializeField] private float initialRotationSpeed = 360f;
-    [SerializeField] private float rotationSpeed = 360f;
-    [SerializeField] private float rotationSpeedIncrement = 30f;
+    public float RotationSpeed = 360f;
     [SerializeField] private float rotationInput;
 
     [Header("Teleporting")]
-    [SerializeField] private float asteroidSafeDistance = 1.0f;
-    [SerializeField] private float asteroidDetectionRadius = .5f;
+    [SerializeField] private float asteroidDetectionRadius = 1f;
     [SerializeField] private int maxLocationSearches = 100;
     [SerializeField] private Vector2 teleportDestination;
+    [SerializeField] private LayerMask avoidAsteroidLayerMask;
+    [SerializeField] private Vector2 initialSpawnLocation;
 
     [Header("Powerups / Effects")]
     [SerializeField] private float invincibleTimeout = 4f;
-    [SerializeField] private float powerupTimeout = 4f;
     [SerializeField] private bool invincible = false;
     [SerializeField] private bool destructionInProgress = false;
 
     private void Awake()
     {
         inputActions = new InputSystem_Actions();
+        animator = GetComponent<Animator>();
+        animator.keepAnimatorStateOnDisable = false;
     }
 
     private void OnEnable()
@@ -95,10 +93,26 @@ public class AsteroidsPlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
         audioManager = AudioManager.Instance;
-        thrustForce = initialThrustForce;
-        rotationSpeed = initialRotationSpeed;
+        OnRespawn();
+    }
+
+    /// <summary>
+    /// Set all variables to their initial state, on game start or respawn
+    /// </summary>
+    public void OnRespawn()
+    {
+        ThrustForce = initialThrustForce;
+        RotationSpeed = initialRotationSpeed;
+        BulletSize = initialBulletSize;
+        lastFireTime = 0f;
+        destructionInProgress = false;
+        teleportDestination = Vector2.zero;
+        transform.SetPositionAndRotation(initialSpawnLocation, Quaternion.identity);
+        animator.SetTrigger("SpaceshipRespawn");
+        GetComponent<ScreenWrap>().enabled = true;
+        rb.angularVelocity = 0;
+        rb.linearVelocity = Vector3.zero;
     }
 
     void Update()
@@ -128,7 +142,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     /// </summary>
     private void HandleRotation()
     {
-        transform.Rotate(Vector3.back * (rotationInput * rotationSpeed * Time.deltaTime));
+        transform.Rotate(Vector3.back * (rotationInput * RotationSpeed * Time.deltaTime));
     }
 
     /// <summary>
@@ -138,7 +152,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     {
         if (thrustInput > 0)
         {
-            rb.AddRelativeForce(Vector2.up * (thrustForce * thrustInput * Time.deltaTime), ForceMode2D.Impulse);
+            rb.AddRelativeForce(Vector2.up * (ThrustForce * thrustInput * Time.deltaTime), ForceMode2D.Impulse);
             animator.SetBool("Thrusting", true);
             audioManager.PlayEngineAudio();
         }
@@ -175,7 +189,7 @@ public class AsteroidsPlayerController : MonoBehaviour
             return;
         }
         GameObject bulletObject = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        bulletObject.transform.localScale = Vector3.one * bulletSize;
+        bulletObject.transform.localScale = Vector3.one * BulletSize;
     }
 
 
@@ -189,14 +203,13 @@ public class AsteroidsPlayerController : MonoBehaviour
         do
         {
             teleportDestination = new Vector2(Random.Range(ScreenBounds.ScreenLeft, ScreenBounds.ScreenRight), Random.Range(ScreenBounds.ScreenBottom, ScreenBounds.ScreenTop));
-            RaycastHit2D hit = Physics2D.CircleCast(teleportDestination, asteroidDetectionRadius, Vector2.right, asteroidSafeDistance, ~LayerMask.NameToLayer("Asteroid"));
-            if (hit.collider == null)
+            Collider2D hit = Physics2D.OverlapCircle(teleportDestination, asteroidDetectionRadius, avoidAsteroidLayerMask);
+            if (hit == null)
             {
                 break;
             }
 
         } while (++searches < maxLocationSearches);
-
         // Begin playing the first half of the teleport animation.
         animator.SetTrigger("TeleportBegin");
         audioManager.PlaySpaceshipTeleportClip();
@@ -246,16 +259,16 @@ public class AsteroidsPlayerController : MonoBehaviour
         destructionInProgress = true;
         animator.SetTrigger("SpaceshipDied");
         audioManager.PlaySpaceshipExplodeClip();
-        Invoke(nameof(DoDeathCleanup), animator.GetCurrentClipLength());
     }
 
     /// <summary>
     /// After the spaceship dies, we need to wait for animation to finish before destroying object and spawning new one
     /// </summary>
-    private void DoDeathCleanup()
+    public void DoDeathCleanup()
     {
-        GameManager.Instance.OnPlayerDeath(transform.position);
-        Destroy(gameObject);
+        GameManager.Instance.OnPlayerDeath();
+        GetComponent<ScreenWrap>().enabled = false;
+        transform.position = new Vector3(999, 999);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -264,42 +277,15 @@ public class AsteroidsPlayerController : MonoBehaviour
         {
             return;
         }
-        if (collision.gameObject.CompareTag("PowerupRocket"))
-        {
-            StartCoroutine(PowerupRocket());
-            Destroy(collision.gameObject);
-        }
-        else if (collision.gameObject.CompareTag("PowerupLife"))
-        {
-            GameManager.Instance.AddLife();
-            Destroy(collision.gameObject);
-        }
-        else if (collision.gameObject.CompareTag("PowerupMove"))
-        {
-            StartCoroutine(PowerupMove());
-            Destroy(collision.gameObject);
-        }
-    }
 
-    /// <summary>
-    /// Apply powerup that increases rotation speed and movement speed for a limited time
-    /// </summary>
-    private IEnumerator PowerupMove()
-    {
-        rotationSpeed += rotationSpeedIncrement;
-        thrustForce += thrustForceIncrement;
-        yield return new WaitForSeconds(powerupTimeout);
-        rotationSpeed -= rotationSpeedIncrement;
-        thrustForce -= thrustForceIncrement;
-    }
+        if (!invincible && collision.gameObject.CompareTag("Asteroid"))
+        {
+            Die();
+        }
 
-    /// <summary>
-    /// Apply powerup which increases bullet size for a limited time
-    /// </summary>
-    private IEnumerator PowerupRocket()
-    {
-        bulletSize += bulletSizeIncrement;
-        yield return new WaitForSeconds(powerupTimeout);
-        bulletSize = initialBulletSize;
+        if (collision.CompareTag("Powerup"))
+        {
+            gdflkjdfgkljdsfklj;dfsa;lkjdfsa;jkldfs;ljkdfsa;jkldfas;ljkadfsl;jkadfs;lkjadfsf
+        }
     }
 }

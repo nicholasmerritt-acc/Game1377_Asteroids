@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 818929886226642956}
   - component: {fileID: 8620991511806959224}
   - component: {fileID: 4663257845471741263}
-  - component: {fileID: -5029018851269149518}
+  - component: {fileID: 2699789235445506848}
   m_Layer: 9
   m_Name: Powerup_Move
   m_TagString: PowerupMove
@@ -139,7 +139,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.32, y: 0.32}
   m_EdgeRadius: 0
---- !u!114 &-5029018851269149518
+--- !u!114 &2699789235445506848
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,6 +148,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8597547294610734881}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e04ec86e46db90143ad8b32b812b1ab2, type: 3}
+  m_Script: {fileID: 11500000, guid: 97480a0c4c992c64d87232409e18aa36, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Powerup
+  m_EditorClassIdentifier: Assembly-CSharp::PowerupMove
+  timeout: 4
+  thrustForceIncrement: 4
+  rotationSpeedIncrement: 30

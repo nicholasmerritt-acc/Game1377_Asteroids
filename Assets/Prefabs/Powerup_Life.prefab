@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3061102312871488572}
   - component: {fileID: 2799604009642689736}
   - component: {fileID: 7112859314607492614}
-  - component: {fileID: 2070932310464831576}
+  - component: {fileID: 6859586209334662206}
   m_Layer: 9
   m_Name: Powerup_Life
   m_TagString: PowerupLife
@@ -137,9 +137,9 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.32, y: 0.32}
+  m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0
---- !u!114 &2070932310464831576
+--- !u!114 &6859586209334662206
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,6 +148,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 638587431017739332}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e04ec86e46db90143ad8b32b812b1ab2, type: 3}
+  m_Script: {fileID: 11500000, guid: e5afd8ec619c48846aaeb09859ef9235, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Powerup
+  m_EditorClassIdentifier: Assembly-CSharp::PowerupLife
+  timeout: 4

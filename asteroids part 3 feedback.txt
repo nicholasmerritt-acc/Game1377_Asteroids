@@ -1,0 +1,22 @@
+asteroids part 3 feedback
+
+DONE:
+EngineAudio class removed
+Asteroid collision moved into Player's onCollision function
+use virtual method for handing powerups so each subclass can implement their version of Pickup
+move all powerup code into Powerup class and subclasses
+respawn player using SetActive and transform.position, instead of Instantiate()
+overlap sphere instead of circlecast
+variable for layermask: need to set?
+
+TODO:
+animations broken
+colliders broken
+wow what ISN'T broken. hmm.
+
+NICE TO HAVE:
+could have both spawners inherit from the same class. hmm.
+
+TODO
+animation events?
+organize scripts into UI

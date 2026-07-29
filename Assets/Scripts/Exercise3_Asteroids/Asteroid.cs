@@ -91,20 +91,7 @@ public class Asteroid : MonoBehaviour
         {
             return;
         }
-        if (collision.gameObject.CompareTag("Player")) {
-            if (collision.gameObject.TryGetComponent<AsteroidsPlayerController>(out AsteroidsPlayerController controller))
-            {
-                if (!controller.IsInvincible())
-                {
-                    controller.Die();
-                }
-            } 
-            else
-            {
-                Debug.LogError("GameObject with Player tag does not have correct Player Controller component!");
-            }
-        }
-        else if (collision.gameObject.CompareTag("Bullet"))
+        if (collision.gameObject.CompareTag("Bullet"))
         {
             GameManager.Instance.AddScore(Score);
             Destroy(collision.gameObject);
