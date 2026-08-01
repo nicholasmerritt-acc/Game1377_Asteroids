@@ -1233,8 +1233,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   PlayerPrefab: {fileID: 2357516278731701826, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
-  PlayerGameObject: {fileID: 1132632977}
-  playerController: {fileID: 1132632981}
+  pcgo: {fileID: 0}
+  playerController: {fileID: 0}
   ScoreText: {fileID: 1680033327}
   LivesText: {fileID: 1969875969}
   lives: 3
@@ -1408,27 +1408,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PauseMenuButtons
   SettingsPanel: {fileID: 0}
   PausePanel: {fileID: 0}
---- !u!1 &1132632977 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2357516278731701826, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
-  m_PrefabInstance: {fileID: 1268511803}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1132632978 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 6769592291571742668, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
-  m_PrefabInstance: {fileID: 1268511803}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1132632981 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 642762768615809231, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
-  m_PrefabInstance: {fileID: 1268511803}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1132632977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab058952446d3ad46a29856a428995e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AsteroidsController
 --- !u!1 &1175797657
 GameObject:
   m_ObjectHideFlags: 0
@@ -1566,67 +1545,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1175797657}
   m_CullTransparentMesh: 1
---- !u!1001 &1268511803
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 642762768615809231, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
-      propertyPath: animator
-      value: 
-      objectReference: {fileID: 1132632978}
-    - target: {fileID: 2357516278731701826, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
-      propertyPath: m_Name
-      value: Spaceship
-      objectReference: {fileID: 0}
-    - target: {fileID: 5399728238154126411, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5399728238154126411, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5399728238154126411, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5399728238154126411, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5399728238154126411, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5399728238154126411, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5399728238154126411, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5399728238154126411, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5399728238154126411, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5399728238154126411, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
 --- !u!1 &1438130963
 GameObject:
   m_ObjectHideFlags: 0
@@ -2577,7 +2495,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4477c57aaa1829d4bbeba2aabe137754, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  player: {fileID: 0}
   initialSpawnWaitTime: 3
   spawnRepeatInterval: 7
   maxPowerups: 3
@@ -3210,4 +3127,3 @@ SceneRoots:
   - {fileID: 1979255042}
   - {fileID: 2078258615}
   - {fileID: 632586395}
-  - {fileID: 1268511803}

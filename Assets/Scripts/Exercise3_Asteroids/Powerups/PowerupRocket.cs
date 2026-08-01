@@ -8,6 +8,7 @@ public class PowerupRocket : Powerup
     public override void HandlePickup()
     {
         StartCoroutine(nameof(IncreaseBulletSize));
+        Destroy(gameObject);
     }
 
     /// <summary>
@@ -18,23 +19,5 @@ public class PowerupRocket : Powerup
         player.BulletSize += bulletSizeIncrement;
         yield return new WaitForSeconds(timeout);
         player.BulletSize -= bulletSizeIncrement;
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            HandlePickup();
-            Destroy(gameObject);
-        }
-        Debug.Log("here trigger");
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            HandlePickup();
-            Destroy(gameObject);
-        }
-        Debug.Log("here collision");
     }
 }

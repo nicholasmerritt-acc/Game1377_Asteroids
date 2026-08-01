@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PowerupSpawner : MonoBehaviour
 {
+    [SerializeField] private AsteroidsPlayerController player;
     [SerializeField] private float initialSpawnWaitTime = 3f;
     [SerializeField] private float spawnRepeatInterval = 4f;
     [SerializeField] private int maxPowerups = 3;
@@ -10,6 +11,10 @@ public class PowerupSpawner : MonoBehaviour
 
     void Start()
     {
+        if (player == null)
+        {
+            player = FindAnyObjectByType<AsteroidsPlayerController>();
+        }
         StartCoroutine(nameof(SpawnPowerup));
     }
 
@@ -23,7 +28,9 @@ public class PowerupSpawner : MonoBehaviour
         while (true)
         {
             Vector2 powerupPosition = new Vector2(Random.Range(ScreenBounds.ScreenLeft, ScreenBounds.ScreenRight), Random.Range(ScreenBounds.ScreenBottom, ScreenBounds.ScreenTop));
-            Instantiate(PowerupPrefabs[Random.Range(0, PowerupPrefabs.Length)], powerupPosition, Quaternion.identity);
+            GameObject powerupObj = Instantiate(PowerupPrefabs[Random.Range(0, PowerupPrefabs.Length)], powerupPosition, Quaternion.identity);
+            Powerup powerup = powerupObj.GetComponent<Powerup>();
+            powerup.SetPlayerController(player);
 
             yield return new WaitUntil(PowerupsLessThanMax);
             yield return new WaitForSeconds(spawnRepeatInterval);

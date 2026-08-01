@@ -9,6 +9,7 @@ public class PowerupMove : Powerup
     public override void HandlePickup()
     {
         StartCoroutine(nameof(IncreaseSpeedAndRotation));
+        Destroy(gameObject);
     }
 
     /// <summary>
@@ -21,23 +22,5 @@ public class PowerupMove : Powerup
         yield return new WaitForSeconds(timeout);
         player.RotationSpeed -= rotationSpeedIncrement;
         player.ThrustForce -= thrustForceIncrement;
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            HandlePickup();
-            Destroy(gameObject);
-        }
-        Debug.Log("here trigger");
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            HandlePickup();
-            Destroy(gameObject);
-        }
-        Debug.Log("here collision");
     }
 }

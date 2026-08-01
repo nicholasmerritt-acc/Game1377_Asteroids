@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     [Header("References")]
     public GameObject PlayerPrefab;
-    public GameObject pcgo;
+    public GameObject PlayerGameObject;
     [SerializeField] private AsteroidsPlayerController playerController;
     public TMP_Text ScoreText;
     public TMP_Text LivesText;
@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        SetupReferences();
+        SetupReferences(); //TODO comment out
     }
 
     private void SetupReferences()
@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
                 //only instantiate if we truly have no player. otherwise, use the existing player in the scene
                 playerController = Instantiate(PlayerPrefab, initialSpawnLocation, PlayerPrefab.transform.rotation).GetComponent<AsteroidsPlayerController>();
             }
-            pcgo = playerController.gameObject;
+            PlayerGameObject = playerController.gameObject;
         }
     }
 
@@ -121,6 +121,7 @@ public class GameManager : MonoBehaviour
     {
         lives--;
         UpdateLivesDisplay();
+        PlayerGameObject.SetActive(false);
         if (lives >= 0)
         {
             StartCoroutine(nameof(RespawnAfterDelay));
@@ -139,10 +140,9 @@ public class GameManager : MonoBehaviour
     /// <param name="spawnLocation"></param>
     private void RespawnPlayer()
     {
-        //pcgo.SetActive(true);
+        PlayerGameObject.SetActive(true);
 
-
-        playerController = pcgo.GetComponent<AsteroidsPlayerController>();
+        playerController = PlayerGameObject.GetComponent<AsteroidsPlayerController>();
         playerController.OnRespawn();
         if (invincibleOnSpawn)
         {

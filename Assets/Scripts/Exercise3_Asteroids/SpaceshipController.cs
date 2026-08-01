@@ -110,7 +110,7 @@ public class AsteroidsPlayerController : MonoBehaviour
         teleportDestination = Vector2.zero;
         transform.SetPositionAndRotation(initialSpawnLocation, Quaternion.identity);
         animator.SetTrigger("SpaceshipRespawn");
-        GetComponent<ScreenWrap>().enabled = true;
+        animator.SetBool("SpaceshipDead", false);
         rb.angularVelocity = 0;
         rb.linearVelocity = Vector3.zero;
     }
@@ -266,9 +266,8 @@ public class AsteroidsPlayerController : MonoBehaviour
     /// </summary>
     public void DoDeathCleanup()
     {
+        animator.SetBool("SpaceshipDead", true);
         GameManager.Instance.OnPlayerDeath();
-        GetComponent<ScreenWrap>().enabled = false;
-        transform.position = new Vector3(999, 999);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -285,7 +284,14 @@ public class AsteroidsPlayerController : MonoBehaviour
 
         if (collision.CompareTag("Powerup"))
         {
-            gdflkjdfgkljdsfklj;dfsa;lkjdfsa;jkldfs;ljkdfsa;jkldfas;ljkadfsl;jkadfs;lkjadfsf
+            if (collision.TryGetComponent<Powerup>(out Powerup powerup))
+            {
+                powerup.HandlePickup();
+            } 
+            else
+            {
+                Debug.LogError("Powerup prefab is missing Powerup component!");
+            }
         }
     }
 }
