@@ -22,6 +22,7 @@
  
  */
 
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -98,11 +99,15 @@ public class AsteroidsPlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Set all variables to their initial state, on game start or respawn
+    /// Set all variables to their initial state, on game start or respawn.
+    /// This seems much more clunky and error-prone than destroying the object and Instantiating a new one.
+    /// But it is less expensive, since we are not calling Destroy and Instantiate on every respawn.
     /// </summary>
     public void OnRespawn()
     {
         ThrustForce = initialThrustForce;
+        thrustInput = 0;
+        rotationInput = 0;
         RotationSpeed = initialRotationSpeed;
         BulletSize = initialBulletSize;
         lastFireTime = 0f;
@@ -213,14 +218,15 @@ public class AsteroidsPlayerController : MonoBehaviour
         // Begin playing the first half of the teleport animation.
         animator.SetTrigger("TeleportBegin");
         audioManager.PlaySpaceshipTeleportClip();
-        Invoke(nameof(FinishTeleporting), animator.GetCurrentClipLength());
+        StartCoroutine(nameof(FinishTeleporting));
     }
 
     /// <summary>
     /// Play the last half of the animation once we have actually moved
     /// </summary>
-    private void FinishTeleporting()
+    private IEnumerator FinishTeleporting()
     {
+        yield return new WaitForSeconds(animator.GetCurrentClipLength());
         transform.position = teleportDestination;
         animator.SetTrigger("TeleportEnd");
     }
@@ -231,7 +237,7 @@ public class AsteroidsPlayerController : MonoBehaviour
     public void BecomeInvincible()
     {
         invincible = true;
-        Invoke(nameof(BecomeNotInvincible), invincibleTimeout);
+        StartCoroutine(nameof(BecomeNotInvincible));
     }
 
     /// <summary>
@@ -246,8 +252,9 @@ public class AsteroidsPlayerController : MonoBehaviour
     /// <summary>
     /// Make the player vincible again
     /// </summary>
-    private void BecomeNotInvincible()
+    private IEnumerator BecomeNotInvincible()
     {
+        yield return new WaitForSeconds(invincibleTimeout);
         invincible = false;
     }
 
@@ -258,7 +265,9 @@ public class AsteroidsPlayerController : MonoBehaviour
     {
         destructionInProgress = true;
         animator.SetTrigger("SpaceshipDied");
+        animator.SetBool("SpaceshipDead", true);
         audioManager.PlaySpaceshipExplodeClip();
+        DoDeathCleanup();
     }
 
     /// <summary>
@@ -266,7 +275,6 @@ public class AsteroidsPlayerController : MonoBehaviour
     /// </summary>
     public void DoDeathCleanup()
     {
-        animator.SetBool("SpaceshipDead", true);
         GameManager.Instance.OnPlayerDeath();
     }
 

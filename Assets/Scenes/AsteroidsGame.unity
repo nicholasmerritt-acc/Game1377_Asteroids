@@ -1245,6 +1245,7 @@ MonoBehaviour:
   invincibleOnSpawn: 0
   respawnDelay: 1
   GameIsPaused: 0
+  GameIsActive: 1
 --- !u!4 &898539623
 Transform:
   m_ObjectHideFlags: 0
@@ -1413,11 +1414,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2357516278731701826, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
   m_PrefabInstance: {fileID: 1268511803}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &1132632978 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 6769592291571742668, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
-  m_PrefabInstance: {fileID: 1268511803}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1132632981 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 642762768615809231, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
@@ -1429,6 +1425,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab058952446d3ad46a29856a428995e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AsteroidsController
+--- !u!95 &1132632982 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6769592291571742668, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
+  m_PrefabInstance: {fileID: 1268511803}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1175797657
 GameObject:
   m_ObjectHideFlags: 0
@@ -1577,7 +1578,15 @@ PrefabInstance:
     - target: {fileID: 642762768615809231, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
       propertyPath: animator
       value: 
-      objectReference: {fileID: 1132632978}
+      objectReference: {fileID: 1132632982}
+    - target: {fileID: 642762768615809231, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
+      propertyPath: initialThrustForce
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 642762768615809231, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
+      propertyPath: destructionInProgress
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2357516278731701826, guid: b5bed9ac15f324145b2fdce28eb50970, type: 3}
       propertyPath: m_Name
       value: Spaceship

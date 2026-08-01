@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Pausing")]
     public bool GameIsPaused = false;
+    public bool GameIsActive = true;
 
     private void Awake()
     {
@@ -61,9 +62,12 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        SetupReferences(); //TODO comment out
+        invincibleOnSpawn = false;
     }
 
+    /// <summary>
+    /// Fallback in case we did not set in the inspector, or references got lost on scene change
+    /// </summary>
     private void SetupReferences()
     {
         if (ScoreText == null)
@@ -97,6 +101,7 @@ public class GameManager : MonoBehaviour
         UpdateLivesDisplay();
         UpdateScoreDisplay();
         AsteroidSpawner.Instance.SpawnInitialAsteroids();
+        GameIsActive = true;
     }
 
     /// <summary>
@@ -119,15 +124,23 @@ public class GameManager : MonoBehaviour
     /// <param name="currentLocation"></param>
     public void OnPlayerDeath()
     {
+        invincibleOnSpawn = true;
         lives--;
         UpdateLivesDisplay();
         PlayerGameObject.SetActive(false);
         if (lives >= 0)
         {
             StartCoroutine(nameof(RespawnAfterDelay));
+        } else
+        {
+            GameIsActive = false;
         }
     }
 
+    /// <summary>
+    /// Respawn the player in the middle of the screen, but wait a bit first
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator RespawnAfterDelay()
     {
         yield return new WaitForSeconds(respawnDelay);

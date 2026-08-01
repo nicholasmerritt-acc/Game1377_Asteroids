@@ -29,24 +29,4 @@ public abstract class Powerup : MonoBehaviour
     /// Player has picked up this powerup
     /// </summary>
     public abstract void HandlePickup();
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            HandlePickup();
-            Destroy(gameObject);
-        }
-        Debug.Log("here trigger");
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            HandlePickup();
-            Destroy(gameObject);
-        }
-        Debug.Log("here collision");
-    }
 }

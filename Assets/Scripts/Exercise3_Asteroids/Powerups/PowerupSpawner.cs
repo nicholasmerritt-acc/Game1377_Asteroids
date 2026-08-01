@@ -24,8 +24,7 @@ public class PowerupSpawner : MonoBehaviour
     IEnumerator SpawnPowerup()
     {
         yield return new WaitForSeconds(initialSpawnWaitTime);
-        //while (GameManager.Instance.GameIsActive)
-        while (true)
+        while (GameManager.Instance.GameIsActive)
         {
             Vector2 powerupPosition = new Vector2(Random.Range(ScreenBounds.ScreenLeft, ScreenBounds.ScreenRight), Random.Range(ScreenBounds.ScreenBottom, ScreenBounds.ScreenTop));
             GameObject powerupObj = Instantiate(PowerupPrefabs[Random.Range(0, PowerupPrefabs.Length)], powerupPosition, Quaternion.identity);

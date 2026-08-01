@@ -6,6 +6,10 @@ public class PowerupMove : Powerup
     [SerializeField] private float thrustForceIncrement = 4f;
     [SerializeField] private float rotationSpeedIncrement = 30f;
 
+    protected override void Start()
+    {
+        base.Start();
+    }
     public override void HandlePickup()
     {
         StartCoroutine(nameof(IncreaseSpeedAndRotation));

@@ -5,6 +5,11 @@ public class PowerupRocket : Powerup
 {
     [SerializeField] private float bulletSizeIncrement = .2f;
 
+    protected override void Start()
+    {
+        base.Start();
+    }
+
     public override void HandlePickup()
     {
         StartCoroutine(nameof(IncreaseBulletSize));
